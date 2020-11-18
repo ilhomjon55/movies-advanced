@@ -9,15 +9,75 @@
   <title>Document</title>
 </head>
 
-<body>
+<body class="bg-light">
+
+  <h1 class="sr-only">Page of movies</h1>
 
 
+  <main>
 
+    <div class="container">
 
+      <!-- Header -->
+      <h2 class="movies__heading h2 text-center my-3">Movies</h2>
+
+      <!-- Search form -->
+      <form class="movies__form-search w-75 mx-auto mb-5 js-movies__form" action="https://echo.htmlacademy.ru/"
+        method="GET">
+        <input class="movies__input-search form-control mb-2 js-movies_search-input" type="text" id="search_movie"
+          name="user_search" placeholder="Search movie...">
+        <button class="movies__submit-btn btn btn-block btn-info" type="submit">Search</button>
+      </form>
+
+      <ul class="movies__list list-unstyled row flex-wrap  js-movies__list"></ul>
+    </div>
+
+  </main>
+
+  <!-- Movies Item Template -->
+  <template id="movies_template">
+    <li class="movies__item movie col-12 col-sm-6 col-md-4 mb-2 ">
+      <div class="movie__inner p-2 border border-info bg-white">
+        <h3 class="movie__heading h5 text-center mb-2 ">Strange Magic</h3>
+        <p>Movie Id:
+          <span class="movie__id text-info">1</span>
+        </p>
+        <p>Released:
+          <span class="movie__year text-info">2019</span>
+        </p>
+        <p>Categories:
+          <span class="movie__categories text-info">
+            Adventure, Animation, Comedy, Family, Fantasy
+          </span>
+        </p>
+        <p>Summary:
+          <span class="movie__summary text-info">
+            Strange Magic, a new animated film, is a madcap fairy tale musical inspired by A Midsummer Night's
+            Dream. Popular songs from the past six decades help tell the tale of a colorful cast of goblins, elves,
+            fairies and imps, and their hilarious misadventures sparked by the battle over a powerful potion.
+          </span>
+        </p>
+        <p>Imdb Id:
+          <span class="movie__imdb-id text-info">tt4191054</span>
+        </p>
+        <p>Imdb Rating:
+          <span class="movie__imdb-rating text-info">5.8</span>
+        </p>
+        <p>Language:
+          <span class="movie__language text-info">English</span>
+        </p>
+        <p>YouTube Link:
+          <a href="#" class="movie__youtube-link text-info">https://www.youtube.com/watch?v=Xr9iLfD6xus</a>
+        </p>
+      </div>
+    </li>
+  </template>
 
   <script src="js/jquery-3.5.1.min.js"></script>
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/utils.js"></script>
+  <script src="js/movies.js"></script>
+  <script src="js/normalized-array.js"></script>
   <script src="js/scripts.js"></script>
 </body>
 
