@@ -61,31 +61,26 @@ elFormSearch.addEventListener('submit', function (evt) {
   // Create searchQuery regex
   var searchQuery = new RegExp(`${inputSearchValue}`, 'gi');
 
+
   // Create array for foundMovies 
   var foundMovies = [];
-
-
-
 
   // Create forEach to find input result
   normalizedMovies.forEach(function (movie) {
 
     if (movie.title.match(searchQuery)) {
       foundMovies.push(movie);
-    } else {
-
     }
 
   });
 
+
+  // Make not found result noticable
   elMoviesNotFoundBox.classList.add('d-none');
 
   if (!foundMovies.length) {
     elMoviesNotFoundBox.classList.remove('d-none');
   }
-
-
-
 
 
   // Show the found result
