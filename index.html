@@ -30,6 +30,9 @@
       </form>
 
       <ul class="movies__list list-unstyled row flex-wrap  js-movies__list"></ul>
+      <div class="d-none alert alert-danger p-3 js-movies__not-found">
+        Sorry we are failed to find this movie
+      </div>
     </div>
 
   </main>
@@ -37,7 +40,7 @@
   <!-- Movies Item Template -->
   <template id="movies_template">
 
-    <li class="movies__item movie col-12 col-sm-6 col-md-4 mb-2 ">
+    <li class="movies__item movie col-12 col-sm-6 mb-4 ">
 
       <div class="movie__inner p-2 border border-info bg-white h-100">
         <h3 class="movie__heading h5 text-center mb-2 font-weight-bold">Strange Magic</h3>

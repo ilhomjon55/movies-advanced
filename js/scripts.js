@@ -3,6 +3,7 @@ var elFormSearch = $_('.js-movies__form');
 var elInputSearch = $_('.js-movies_search-input', elFormSearch);
 var elListMovies = $_('.js-movies__list');
 var elTemplateMovies = $_('#movies_template');
+var elMoviesNotFoundBox = $_('.js-movies__not-found');
 
 
 // Create element from Movies Template
@@ -63,14 +64,29 @@ elFormSearch.addEventListener('submit', function (evt) {
   // Create array for foundMovies 
   var foundMovies = [];
 
+
+
+
   // Create forEach to find input result
   normalizedMovies.forEach(function (movie) {
 
     if (movie.title.match(searchQuery)) {
       foundMovies.push(movie);
-    };
+    } else {
+
+    }
 
   });
+
+  elMoviesNotFoundBox.classList.add('d-none');
+
+  if (!foundMovies.length) {
+    elMoviesNotFoundBox.classList.remove('d-none');
+  }
+
+
+
+
 
   // Show the found result
   renderMovies(foundMovies);
