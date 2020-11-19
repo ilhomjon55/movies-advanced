@@ -4,6 +4,9 @@ var elInputSearch = $_('.js-movies_search-input', elFormSearch);
 var elListMovies = $_('.js-movies__list');
 var elTemplateMovies = $_('#movies_template');
 var elMoviesNotFoundBox = $_('.js-movies__not-found');
+var elFormSelectMovies = $_('.js-form-select-movies');
+var elSelectCategorie = $_('.js-select-category', elFormSelectMovies);
+var elSelectRating = $_('.js-select-rating', elFormSelectMovies);
 
 
 // Create element from Movies Template
@@ -87,4 +90,87 @@ elFormSearch.addEventListener('submit', function (evt) {
 
    // Show the found result
    renderMovies(foundMovies);
+});
+
+/* =============================================
+Selecting and Searching
+============================================= */
+
+
+var categoriesArr = [];
+
+normalizedMovies.forEach(function (movie) {
+
+   movie.categories.forEach(function (categorie) {
+
+      if (!(categoriesArr.includes(categorie))) {
+         categoriesArr.push(categorie);
+      };
+   });
+});
+
+
+var renderNewElements = function () {
+
+   var elCategoriesFragment = document.createDocumentFragment();
+
+   categoriesArr.forEach(function (element) {
+      var elNewElement = createNewEl('option', '', element);
+      elNewElement.value = element;
+      elCategoriesFragment.appendChild(elNewElement);
+   });
+
+   return elSelectCategorie.appendChild(elCategoriesFragment);
+}
+
+renderNewElements();
+
+
+elFormSelectMovies.addEventListener('submit', function (evt) {
+   evt.preventDefault();
+
+   var selectCategorieValue = elSelectCategorie.value.trim();
+
+
+   var selectedCategories = normalizedMovies.filter(function (movie) {
+      return movie.categories.includes(selectCategorieValue);
+   });
+
+
+   renderMovies(selectedCategories);
+
+
+   /* Rating */
+
+   var selectRatingValue = elSelectRating.value.trim();
+
+   var selectedRatings = {};
+   if (selectRatingValue === 'All') {
+      selectedRatings = selectedCategories.map(function (movie) {
+         return movie;
+      });
+   } else if (selectRatingValue === 'Low') {
+      selectedRatings = selectedCategories.filter(function (movie) {
+         return 4 > movie.imdbRating && movie.imdbRating >= 0;
+      });
+
+   } else if (selectRatingValue === 'Medium') {
+      selectedRatings = selectedCategories.filter(function (movie) {
+         return 7 > movie.imdbRating && movie.imdbRating >= 4;
+      });
+
+   } else if (selectRatingValue === 'High') {
+      selectedRatings = selectedCategories.filter(function (movie) {
+         return 10 >= movie.imdbRating && movie.imdbRating >= 7;
+      });
+
+   }
+
+   elMoviesNotFoundBox.classList.add('d-none');
+
+   if (!selectedRatings.length) {
+      elMoviesNotFoundBox.classList.remove('d-none');
+   }
+
+   renderMovies(selectedRatings);
 });
