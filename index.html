@@ -29,32 +29,45 @@
             <button class="movies__submit-btn btn btn-block btn-info" type="submit">Search</button>
          </form>
 
-         <ul class="movies__list list-unstyled row flex-wrap  js-movies__list"></ul>
-         <div class="d-none alert alert-danger p-3 js-movies__not-found">
-            Sorry we are failed to find this movie
+         <!-- Movies List -->
+         <div class="row">
+            <form class="col-3" action="https://echo.htmlacademy.ru/">
+            </form>
+            <ul class="movies__list list-unstyled col-9 row flex-wrap  js-movies__list"></ul>
+            <div class="d-none alert alert-danger p-3 js-movies__not-found">
+               Sorry we are failed to find this movie
+            </div>
          </div>
       </div>
 
    </main>
 
+
    <!-- Movies Item Template -->
    <template id="movies_template">
 
-      <li class="movies__item movie col-12 col-sm-6 mb-4 ">
+      <li class="movies__item movie col-12 col-md-6 mb-4 ">
 
          <div class="movie__inner p-3 border border-info bg-white h-100">
+
+            <img class="movie__img img-fluid mb-3" src="https://via.placeholder.com/400x250" width="400" height="250">
+
             <h3 class="movie__heading h5 text-center mb-2 font-weight-bold">Strange Magic</h3>
+
             <p>Movie Id:
                <span class="movie__id text-info">1</span>
             </p>
+
             <p>Released:
                <span class="movie__year text-info">2019</span>
             </p>
+
             <p>Categories:
                <span class="movie__categories text-info">
                   Adventure, Animation, Comedy, Family, Fantasy
                </span>
             </p>
+
             <p>Summary:
                <span class="movie__summary text-info">
                   Strange Magic, a new animated film, is a madcap fairy tale musical inspired by A Midsummer Night's
@@ -63,15 +76,19 @@
                   fairies and imps, and their hilarious misadventures sparked by the battle over a powerful potion.
                </span>
             </p>
+
             <p>Imdb Id:
                <span class="movie__imdb-id text-info">tt4191054</span>
             </p>
+
             <p>Imdb Rating:
                <span class="movie__imdb-rating text-info">5.8</span>
             </p>
+
             <p>Language:
                <span class="movie__language text-info">English</span>
             </p>
+
             <p>YouTube Trailer Link:
                <a href="#" class="movie__youtube-link text-info">https://www.youtube.com/watch?v=Xr9iLfD6xus</a>
             </p>
