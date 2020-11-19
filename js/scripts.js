@@ -85,18 +85,20 @@ elFormSearch.addEventListener('submit', function (evt) {
 
    if (!foundMovies.length) {
       elMoviesNotFoundBox.classList.remove('d-none');
-   }
+   };
 
 
    // Show the found result
    renderMovies(foundMovies);
 });
 
+
+
 /* =============================================
 Selecting and Searching
 ============================================= */
 
-
+// Get all types of categories and assign to array
 var categoriesArr = [];
 
 normalizedMovies.forEach(function (movie) {
@@ -110,7 +112,8 @@ normalizedMovies.forEach(function (movie) {
 });
 
 
-var renderNewElements = function () {
+// Create a function tha creates option elements for selects
+var renderNewOptions = function () {
 
    var elCategoriesFragment = document.createDocumentFragment();
 
@@ -123,32 +126,41 @@ var renderNewElements = function () {
    return elSelectCategorie.appendChild(elCategoriesFragment);
 }
 
-renderNewElements();
+// Make the function work
+renderNewOptions();
 
 
+// Add event listener to elFormSelectMovies
 elFormSelectMovies.addEventListener('submit', function (evt) {
    evt.preventDefault();
 
+   // Get value of elSelectCategorie
    var selectCategorieValue = elSelectCategorie.value.trim();
 
-
+   // Find category related objects 
    var selectedCategories = normalizedMovies.filter(function (movie) {
       return movie.categories.includes(selectCategorieValue);
    });
 
-
+   // Render category related objects 
    renderMovies(selectedCategories);
 
 
-   /* Rating */
+   // Rating ==============================================
 
+   // Get value from elSelectRating
    var selectRatingValue = elSelectRating.value.trim();
 
+
+   // Create empty array to get selected Ratings
    var selectedRatings = {};
+
+   // Validate and Filter appropriate  Rating type
    if (selectRatingValue === 'All') {
       selectedRatings = selectedCategories.map(function (movie) {
          return movie;
       });
+
    } else if (selectRatingValue === 'Low') {
       selectedRatings = selectedCategories.filter(function (movie) {
          return 4 > movie.imdbRating && movie.imdbRating >= 0;
@@ -166,11 +178,13 @@ elFormSelectMovies.addEventListener('submit', function (evt) {
 
    }
 
+   // Add notification if nothing is found
    elMoviesNotFoundBox.classList.add('d-none');
 
    if (!selectedRatings.length) {
       elMoviesNotFoundBox.classList.remove('d-none');
    }
 
+   // Make final result work
    renderMovies(selectedRatings);
 });
