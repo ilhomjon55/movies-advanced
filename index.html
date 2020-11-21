@@ -22,7 +22,7 @@
          <h2 class="movies__heading h2 text-center my-3">Movies</h2>
 
          <!-- Search form -->
-         <form class="movies__form-search w-75 mx-auto mb-5 js-movies__form" action="https://echo.htmlacademy.ru/"
+         <form class="movies__form-search w-75 mx-auto mb-4 js-movies__form" action="https://echo.htmlacademy.ru/"
             method="GET" autocomplete="off">
 
             <input class="movies__input-search form-control mb-2 js-movies_search-input" type="search" id="search_movie"
@@ -37,24 +37,42 @@
             <!-- Form search by Something -->
             <form class="col-12 col-sm-3 js-form-select-movies" action="https://echo.htmlacademy.ru/">
 
-               <div class="bg-white border border-info mb-5 m-sm-0 p-3 pb-5">
+               <div class="bg-white border border-info mb-5 m-sm-0 p-3">
 
-                  <h3 class="text-center h5 mb-5">Choose Movies By:</h3>
+                  <h3 class="text-center h5 mb-4">Choose Movies By:</h3>
 
                   <!-- Select Categories -->
-                  <select class="custom-select mb-5 js-select-category" name="movie__categories" id="movie__categories"
+                  <label for="movie__categories">Categories:</label>
+                  <select class="custom-select mb-3 js-select-category" name="movie__categories" id="movie__categories"
                      required>
-                     <option value="" selected disabled>Categories</option>
+                     <option value="all" selected>All</option>
                   </select>
 
                   <!-- Select by Rating -->
-                  <select class="form-control mb-5 js-select-rating" type="number" name="movie_rating" id="movie_rating"
+                  <label for="movie_rating">Rating:</label>
+                  <select class="form-control mb-3 js-select-rating" name="movie_rating" id="movie_rating" required>
+                     <option value="all" selected>All</option>
+                     <option value="high">High</option>
+                     <option value="medium">Medium</option>
+                     <option value="low">Low</option>
+                  </select>
+
+                  <!-- Alphabet-->
+                  <label for="movie_alphabet-sort">Alphabet:</label>
+                  <select class="form-control mb-3 js-select-rating" name="movie_alphabet-sort" id="movie_alphabet-sort"
                      required>
-                     <option value="" selected disabled>Rating</option>
-                     <option value="All">All</option>
-                     <option value="High">High</option>
-                     <option value="Medium">Medium</option>
-                     <option value="Low">Low</option>
+                     <option value="all" selected>All</option>
+                     <option value="a_z">Name(A-Z)</option>
+                     <option value="z_a">Name(Z-A)</option>
+                  </select>
+
+                  <!-- Year -->
+                  <label for="movie_year-sort">Year:</label>
+                  <select class="form-control mb-3 js-select-rating" name="movie_year-sort" id="movie_year-sort"
+                     required>
+                     <option value="all" selected>All</option>
+                     <option value="the_last">The Latest</option>
+                     <option value="low">The Oldest</option>
                   </select>
 
                   <button class="btn btn-block btn-info">Search</button>
