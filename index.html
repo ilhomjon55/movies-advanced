@@ -59,8 +59,8 @@
 
                   <!-- Alphabet-->
                   <label for="movie_alphabet-sort">Alphabet:</label>
-                  <select class="form-control mb-3 js-select-rating" name="movie_alphabet-sort" id="movie_alphabet-sort"
-                     required>
+                  <select class="form-control mb-3 js-select-alphabet" name="movie_alphabet-sort"
+                     id="movie_alphabet-sort" required>
                      <option value="all" selected>All</option>
                      <option value="a_z">Name(A-Z)</option>
                      <option value="z_a">Name(Z-A)</option>
@@ -68,8 +68,7 @@
 
                   <!-- Year -->
                   <label for="movie_year-sort">Year:</label>
-                  <select class="form-control mb-3 js-select-rating" name="movie_year-sort" id="movie_year-sort"
-                     required>
+                  <select class="form-control mb-3 js-select-year" name="movie_year-sort" id="movie_year-sort" required>
                      <option value="all" selected>All</option>
                      <option value="the_last">The Latest</option>
                      <option value="low">The Oldest</option>
@@ -95,7 +94,7 @@
 
 
    <!-- Movies Item Template -->
-   <template id="movies_template">
+   <template id="movie_template">
 
       <li class="movies__item movie col-12 col-md-6 mb-4 ">
 
@@ -140,7 +139,7 @@
                <span class="movie__language text-info">English</span>
             </p>
 
-            <p>YouTube Trailer Link:
+            <p>Trailer:
                <a href="#" class="movie__youtube-link text-info">https://www.youtube.com/watch?v=Xr9iLfD6xus</a>
             </p>
 
