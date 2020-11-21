@@ -45,33 +45,22 @@
                   <label for="movie__categories">Categories:</label>
                   <select class="custom-select mb-3 js-select-category" name="movie__categories" id="movie__categories"
                      required>
-                     <option value="all" selected>All</option>
+                     <option value="">Please select</option>
+                     <option value="all">All</option>
                   </select>
 
-                  <!-- Select by Rating -->
-                  <label for="movie_rating">Rating:</label>
-                  <select class="form-control mb-3 js-select-rating" name="movie_rating" id="movie_rating" required>
-                     <option value="all" selected>All</option>
-                     <option value="high">High</option>
-                     <option value="medium">Medium</option>
-                     <option value="low">Low</option>
-                  </select>
-
-                  <!-- Alphabet-->
-                  <label for="movie_alphabet-sort">Alphabet:</label>
-                  <select class="form-control mb-3 js-select-alphabet" name="movie_alphabet-sort"
-                     id="movie_alphabet-sort" required>
-                     <option value="all" selected>All</option>
+                  <!-- Features-->
+                  <label for="movie_features-sort">Features:</label>
+                  <select class="form-control mb-3 js-select-features" name="movie_features-sort"
+                     id="movie_features-sort" required>
+                     <option value="">Please select</option>
+                     <option value="all">All</option>
                      <option value="a_z">Name(A-Z)</option>
                      <option value="z_a">Name(Z-A)</option>
-                  </select>
-
-                  <!-- Year -->
-                  <label for="movie_year-sort">Year:</label>
-                  <select class="form-control mb-3 js-select-year" name="movie_year-sort" id="movie_year-sort" required>
-                     <option value="all" selected>All</option>
-                     <option value="the_last">The Latest</option>
-                     <option value="low">The Oldest</option>
+                     <option value="the_latest">Year(latest)</option>
+                     <option value="the_oldest">Year(oldest)</option>
+                     <option value="highest_to_lowest">Rating(highest to lowest)</option>
+                     <option value="lowest_to_highest">Rating(lowest to highest)</option>
                   </select>
 
                   <button class="btn btn-block btn-info">Search</button>
@@ -140,7 +129,8 @@
             </p>
 
             <p>Trailer:
-               <a href="#" class="movie__youtube-link text-info">https://www.youtube.com/watch?v=Xr9iLfD6xus</a>
+               <a class="movie__youtube-link text-info" href="#"
+                  target="_blank">https://www.youtube.com/watch?v=Xr9iLfD6xus</a>
             </p>
 
          </div>

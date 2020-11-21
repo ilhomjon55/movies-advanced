@@ -16,7 +16,6 @@ var createNewEl = function (tag, className, text) {
 
    if (text) {
       elNew.textContent = text
-      return
    }
 
    return elNew
