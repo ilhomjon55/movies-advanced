@@ -224,53 +224,29 @@ elFormSelectMovies.addEventListener('submit', function (evt) {
 
    } else if (selectFeaturesValue === 'the_latest') {
 
-      foundMoviesCategoriesFeatures = foundMoviesCategories.sort(function (b, a) {
-         if (a.year > b.year) {
-            return 1
-         } else if (a.year < b.year) {
-            return -1
-         } else {
-            return 0
-         }
+      foundMoviesCategoriesFeatures = foundMoviesCategories.sort(function (a, b) {
+         return b.year - a.year
       })
       renderMovies(foundMoviesCategoriesFeatures)
 
    } else if (selectFeaturesValue === 'the_oldest') {
 
       var foundMoviesCategoriesFeatures = foundMoviesCategories.sort(function (a, b) {
-         if (a.year > b.year) {
-            return 1
-         } else if (a.year < b.year) {
-            return -1
-         } else {
-            return 0
-         }
+         return a.year - b.year
       })
       renderMovies(foundMoviesCategoriesFeatures)
 
    } else if (selectFeaturesValue === 'highest_to_lowest') {
 
-      foundMoviesCategoriesFeatures = foundMoviesCategories.sort(function (b, a) {
-         if (a.imdb_rating > b.imdb_rating) {
-            return 1
-         } else if (a.imdb_rating < b.imdb_rating) {
-            return -1
-         } else {
-            return 0
-         }
+      foundMoviesCategoriesFeatures = foundMoviesCategories.sort(function (a, b) {
+         return b.imdb_rating - a.imdb_rating
       })
       renderMovies(foundMoviesCategoriesFeatures)
 
    } else if (selectFeaturesValue === 'lowest_to_highest') {
 
       foundMoviesCategoriesFeatures = foundMoviesCategories.sort(function (a, b) {
-         if (a.imdb_rating > b.imdb_rating) {
-            return 1
-         } else if (a.imdb_rating < b.imdb_rating) {
-            return -1
-         } else {
-            return 0
-         }
+         return a.imdb_rating - b.imdb_rating
       })
       renderMovies(foundMoviesCategoriesFeatures)
 
