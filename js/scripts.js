@@ -1,9 +1,9 @@
 // Get HTML elements
 var elFormMovies = $_('.js-movies__form')
 var elInputSearchMovie = $_('.js-movies_search-input', elFormMovies)
-var elFormSelectMovies = $_('.js-form-select-movies', elFormSelectMovies)
-var elSelectCategory = $_('.js-select-category')
-var elSelectFeatures = $_('.js-select-features')
+var elFormSelectMovies = $_('.js-form-select-movies')
+var elSelectCategory = $_('.js-select-category', elFormSelectMovies)
+var elSelectFeatures = $_('.js-select-features', elFormSelectMovies)
 var elMoviesResultList = $_('.js-movies__list')
 var elBoxNotFoundMovies = $_('.js-movies__not-found')
 var elMovieTemplate = $_('#movie_template').content
@@ -63,7 +63,7 @@ var renderMovies = function (movies) {
       elFragementMovies.appendChild(createNewMovie(movie))
    })
 
-   elMoviesResultList.appendChild(elFragementMovies)
+   return elMoviesResultList.appendChild(elFragementMovies)
 }
 
 // Render first 100 of movies
@@ -85,7 +85,7 @@ elFormMovies.addEventListener('submit', function (evt) {
    var inputSearchMovie = elInputSearchMovie.value.trim()
 
    // Prevent form empty input
-   if (!inputSearchMovie) {
+   if (!(inputSearchMovie)) {
       alert('Please, enter an appropriate name of movie!')
       return
    }
@@ -106,7 +106,7 @@ elFormMovies.addEventListener('submit', function (evt) {
    // Show alert-danger when nothing is found
    elBoxNotFoundMovies.classList.add('d-none')
 
-   if (!foundMovies.length) {
+   if (!(foundMovies.length)) {
       elBoxNotFoundMovies.classList.remove('d-none')
    }
 
@@ -143,7 +143,7 @@ var createElOption = function (arr, elAppend) {
    })
 
 
-   elAppend.appendChild(elCategoryOptions)
+   return elAppend.appendChild(elCategoryOptions)
 }
 
 
@@ -163,7 +163,7 @@ elFormSelectMovies.addEventListener('submit', function (evt) {
    var selectFeaturesValue = elSelectFeatures.value
 
    // Work when even nothing is searched
-   if (!foundMovies.length) {
+   if (!(foundMovies.length)) {
       foundMovies = normalizedMovies.slice(0, 100).map(function (movie) {
          return movie
       })
@@ -188,7 +188,7 @@ elFormSelectMovies.addEventListener('submit', function (evt) {
 
    // Features ============================================
 
-   // Create empty array to render at the end
+   // Create empty array to render for the end
    var foundMoviesCategoriesFeatures = []
 
 
