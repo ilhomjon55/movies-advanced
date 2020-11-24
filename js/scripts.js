@@ -13,7 +13,7 @@ var elMovieTemplate = $_('#movie_template').content
 Normalize Movies Array
 ======================================================= */
 
-var normalizedMovies = movies.map(function (movie, i) {
+var normalizedMovies = movies.map((movie, i) => {
    return {
       id: i + 1,
       title: movie.Title.toString(),
@@ -30,7 +30,7 @@ var normalizedMovies = movies.map(function (movie, i) {
 
 
 // Create element function
-var createNewMovie = function (movie) {
+var createNewMovie = (movie) => {
    // Clone template
    elNewMovie = elMovieTemplate.cloneNode(true)
 
@@ -78,7 +78,7 @@ var foundMovies = []
 Listen elFormMovies
 ======================================================= */
 
-elFormMovies.addEventListener('submit', function (evt) {
+elFormMovies.addEventListener('submit', (evt) => {
    evt.preventDefault()
 
    // Get value of elInputSearchMovie
@@ -95,7 +95,7 @@ elFormMovies.addEventListener('submit', function (evt) {
    var searchQuery = new RegExp(inputSearchMovie, 'gi')
 
    // Filter searched movies
-   foundMovies = normalizedMovies.filter(function (movie) {
+   foundMovies = normalizedMovies.filter((movie) => {
       return movie.title.match(searchQuery)
    })
 
@@ -119,9 +119,9 @@ elFormMovies.addEventListener('submit', function (evt) {
 // Assign all categories to an array
 var movieCategories = []
 
-normalizedMovies.forEach(function (movie) {
+normalizedMovies.forEach((movie) => {
 
-   movie.categories.forEach(function (category) {
+   movie.categories.forEach((category) => {
 
       if (!(movieCategories.includes(category))) {
          movieCategories.push(category)
@@ -131,12 +131,14 @@ normalizedMovies.forEach(function (movie) {
 
 })
 
+// Sort the categories array
+movieCategories.sort()
 
 // Function to create option elements and append to select
-var createElOption = function (arr, elAppend) {
+var createElOption = (arr, elAppend) => {
    var elCategoryOptions = document.createDocumentFragment();
 
-   arr.forEach(function (category) {
+   arr.forEach((category) => {
       var elNewOption = createNewEl('option', ' ', category)
       elNewOption.value = category
       elCategoryOptions.appendChild(elNewOption)
@@ -155,7 +157,7 @@ createElOption(movieCategories, elSelectCategory)
 Listen elFormSelectMovies 
 =================================================== */
 
-elFormSelectMovies.addEventListener('submit', function (evt) {
+elFormSelectMovies.addEventListener('submit', (evt) => {
    evt.preventDefault()
 
    // Get select values
@@ -164,7 +166,7 @@ elFormSelectMovies.addEventListener('submit', function (evt) {
 
    // Work when even nothing is searched
    if (!(foundMovies.length)) {
-      foundMovies = normalizedMovies.slice(0, 100).map(function (movie) {
+      foundMovies = normalizedMovies.slice(0, 100).map((movie) => {
          return movie
       })
    }
@@ -172,13 +174,13 @@ elFormSelectMovies.addEventListener('submit', function (evt) {
    // Categories =======================================
 
    // Filter categories
-   var foundMoviesCategories = foundMovies.filter(function (movie) {
+   var foundMoviesCategories = foundMovies.filter((movie) => {
       return movie.categories.includes(selectCategoryValue);
    })
 
 
    if (selectCategoryValue === 'all') {
-      foundMoviesCategories = foundMovies.map(function (movie) {
+      foundMoviesCategories = foundMovies.map((movie) => {
          return movie
       })
 
@@ -198,7 +200,7 @@ elFormSelectMovies.addEventListener('submit', function (evt) {
 
    } else if (selectFeaturesValue === 'a_z') {
 
-      foundMoviesCategoriesFeatures = foundMoviesCategories.sort(function (a, b) {
+      foundMoviesCategoriesFeatures = foundMoviesCategories.sort((a, b) => {
          if (a.title > b.title) {
             return 1
          } else if (a.title < b.title) {
@@ -211,7 +213,7 @@ elFormSelectMovies.addEventListener('submit', function (evt) {
 
    } else if (selectFeaturesValue === 'z_a') {
 
-      foundMoviesCategoriesFeatures = foundMoviesCategories.sort(function (b, a) {
+      foundMoviesCategoriesFeatures = foundMoviesCategories.sort((b, a) => {
          if (a.title > b.title) {
             return 1
          } else if (a.title < b.title) {
@@ -224,28 +226,28 @@ elFormSelectMovies.addEventListener('submit', function (evt) {
 
    } else if (selectFeaturesValue === 'the_latest') {
 
-      foundMoviesCategoriesFeatures = foundMoviesCategories.sort(function (a, b) {
+      foundMoviesCategoriesFeatures = foundMoviesCategories.sort((a, b) => {
          return b.year - a.year
       })
       renderMovies(foundMoviesCategoriesFeatures)
 
    } else if (selectFeaturesValue === 'the_oldest') {
 
-      var foundMoviesCategoriesFeatures = foundMoviesCategories.sort(function (a, b) {
+      var foundMoviesCategoriesFeatures = foundMoviesCategories.sort((a, b) => {
          return a.year - b.year
       })
       renderMovies(foundMoviesCategoriesFeatures)
 
    } else if (selectFeaturesValue === 'highest_to_lowest') {
 
-      foundMoviesCategoriesFeatures = foundMoviesCategories.sort(function (a, b) {
+      foundMoviesCategoriesFeatures = foundMoviesCategories.sort((a, b) => {
          return b.imdb_rating - a.imdb_rating
       })
       renderMovies(foundMoviesCategoriesFeatures)
 
    } else if (selectFeaturesValue === 'lowest_to_highest') {
 
-      foundMoviesCategoriesFeatures = foundMoviesCategories.sort(function (a, b) {
+      foundMoviesCategoriesFeatures = foundMoviesCategories.sort((a, b) => {
          return a.imdb_rating - b.imdb_rating
       })
       renderMovies(foundMoviesCategoriesFeatures)
