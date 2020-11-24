@@ -21,25 +21,23 @@
          <!-- Header -->
          <h2 class="movies__heading h2 text-center my-3">Movies</h2>
 
-         <!-- Search form -->
-         <form class="movies__form-search w-75 mx-auto mb-4 js-movies__form" action="https://echo.htmlacademy.ru/"
-            method="GET" autocomplete="off">
-
-            <input class="movies__input-search form-control mb-2 js-movies_search-input" type="search" id="search_movie"
-               name="user_search" placeholder="Search movie..." aria-label="Search movie" required>
-
-            <button class="movies__submit-btn btn btn-block btn-info" type="submit">Search</button>
-         </form>
 
          <!-- Movies List -->
          <div class="row">
 
             <!-- Form search by Something -->
-            <form class="col-12 col-sm-3 js-form-select-movies" action="https://echo.htmlacademy.ru/">
+            <form class="col-12 col-sm-4 js-movies__form" action="https://echo.htmlacademy.ru/">
+
 
                <div class="bg-white border border-info mb-5 m-sm-0 p-3">
 
                   <h3 class="text-center h5 mb-4">Choose Movies By:</h3>
+
+                  <!-- Search by Title -->
+                  <label for="movie__search">Title:</label>
+                  <input class="movies__input-search form-control mb-3 js-movies_search-input" type="search"
+                     id="movie__search" name="user_search" placeholder="Search movie..." aria-label="Search movie"
+                     required>
 
                   <!-- Select Categories -->
                   <label for="movie__categories">Categories:</label>
@@ -49,8 +47,14 @@
                      <option value="all">All</option>
                   </select>
 
+                  <!-- Search by Title -->
+                  <label for="movie__search-rating">Rating:</label>
+                  <input class="movies__input-rating form-control mb-3 js-movies_rating-input" type="number"
+                     id="movie__search-rating" name="user_search-rating" placeholder="Rating..." value="5"
+                     aria-label="Search movie by rating" required>
+
                   <!-- Features-->
-                  <label for="movie_features-sort">Features:</label>
+                  <!-- <label for="movie_features-sort">Features:</label>
                   <select class="form-control mb-3 js-select-features" name="movie_features-sort"
                      id="movie_features-sort" required>
                      <option value="">Please select</option>
@@ -59,9 +63,9 @@
                      <option value="z_a">Name(Z-A)</option>
                      <option value="the_latest">Year(latest)</option>
                      <option value="the_oldest">Year(oldest)</option>
-                     <option value="highest_to_lowest">Rating(highest to lowest)</option>
-                     <option value="lowest_to_highest">Rating(lowest to highest)</option>
-                  </select>
+                     <option value="high_to_low">Rating(high to low)</option>
+                     <option value="low_to_high">Rating(low to high)</option>
+                  </select> -->
 
                   <button class="btn btn-block btn-info">Search</button>
                </div>
@@ -69,7 +73,7 @@
             </form>
 
             <!-- Movies side -->
-            <div class="col-12 col-sm-9">
+            <div class="col-12 col-sm-8">
                <ul class="movies__list list-unstyled  row flex-wrap  js-movies__list mx-auto m-sm-0"></ul>
 
                <div class="d-none alert alert-danger p-3 js-movies__not-found">
@@ -142,7 +146,6 @@
    <script src="js/bootstrap.bundle.min.js"></script>
    <script src="js/utils.js"></script>
    <script src="js/movies.js"></script>
-   <script src="js/normalized-array.js"></script>
    <script src="js/scripts.js"></script>
 </body>
 

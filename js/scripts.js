@@ -1,9 +1,9 @@
 // Get HTML elements
 var elFormMovies = $_('.js-movies__form')
 var elInputSearchMovie = $_('.js-movies_search-input', elFormMovies)
-var elFormSelectMovies = $_('.js-form-select-movies')
-var elSelectCategory = $_('.js-select-category', elFormSelectMovies)
-var elSelectFeatures = $_('.js-select-features', elFormSelectMovies)
+var elInputRatingMovie = $_('.js-movies_rating-input', elFormMovies)
+var elSelectCategory = $_('.js-select-category', elFormMovies)
+var elSelectFeatures = $_('.js-select-features', elFormMovies)
 var elMoviesResultList = $_('.js-movies__list')
 var elBoxNotFoundMovies = $_('.js-movies__not-found')
 var elMovieTemplate = $_('#movie_template').content
@@ -27,6 +27,7 @@ var normalizedMovies = movies.map((movie, i) => {
       trailer: `https://www.youtube.com/watch?v=${movie.ytid}`
    }
 })
+
 
 
 // Create element function
@@ -53,13 +54,13 @@ var createNewMovie = (movie) => {
 
 
 // Global render movies function
-var renderMovies = function (movies) {
+var renderMovies = (movies) => {
 
    elMoviesResultList.innerHTML = ''
 
    var elFragementMovies = document.createDocumentFragment()
 
-   movies.forEach(function (movie) {
+   movies.forEach((movie) => {
       elFragementMovies.appendChild(createNewMovie(movie))
    })
 
@@ -68,52 +69,6 @@ var renderMovies = function (movies) {
 
 // Render first 100 of movies
 renderMovies(normalizedMovies.slice(0, 100))
-
-
-// Declare foundMovies Global to sort them then
-var foundMovies = []
-
-
-/* =======================================================
-Listen elFormMovies
-======================================================= */
-
-elFormMovies.addEventListener('submit', (evt) => {
-   evt.preventDefault()
-
-   // Get value of elInputSearchMovie
-   var inputSearchMovie = elInputSearchMovie.value.trim()
-
-   // Prevent form empty input
-   if (!(inputSearchMovie)) {
-      alert('Please, enter an appropriate name of movie!')
-      return
-   }
-
-
-   // Search query
-   var searchQuery = new RegExp(inputSearchMovie, 'gi')
-
-   // Filter searched movies
-   foundMovies = normalizedMovies.filter((movie) => {
-      return movie.title.match(searchQuery)
-   })
-
-   // Render found movies
-   renderMovies(foundMovies)
-
-
-   // Show alert-danger when nothing is found
-   elBoxNotFoundMovies.classList.add('d-none')
-
-   if (!(foundMovies.length)) {
-      elBoxNotFoundMovies.classList.remove('d-none')
-   }
-
-
-
-})
-
 
 
 // Assign all categories to an array
@@ -153,106 +108,76 @@ var createElOption = (arr, elAppend) => {
 createElOption(movieCategories, elSelectCategory)
 
 
-/* ===================================================
-Listen elFormSelectMovies 
-=================================================== */
+var findResults = (inputTitle, minRating, category) => {
 
-elFormSelectMovies.addEventListener('submit', (evt) => {
-   evt.preventDefault()
+   return normalizedMovies.filter((movie) => {
 
-   // Get select values
-   var selectCategoryValue = elSelectCategory.value
-   var selectFeaturesValue = elSelectFeatures.value
+      if (category === 'all') {
+         var condition = movie.title.match(inputTitle) && movie.imdb_rating >= minRating
+      } else {
+         var condition = movie.title.match(inputTitle) && movie.imdb_rating >= minRating && movie.categories.includes(category)
+      }
 
-   // Work when even nothing is searched
-   if (!(foundMovies.length)) {
-      foundMovies = normalizedMovies.slice(0, 100).map((movie) => {
-         return movie
-      })
-   }
-
-   // Categories =======================================
-
-   // Filter categories
-   var foundMoviesCategories = foundMovies.filter((movie) => {
-      return movie.categories.includes(selectCategoryValue);
+      return condition
    })
 
+}
 
-   if (selectCategoryValue === 'all') {
-      foundMoviesCategories = foundMovies.map((movie) => {
-         return movie
-      })
 
-      renderMovies(foundMoviesCategories)
+/* ===================================================
+Listen elFormMovies 
+=================================================== */
+
+elFormMovies.addEventListener('submit', (evt) => {
+   evt.preventDefault()
+
+
+   // Get select values
+   var inputSearchMovie = elInputSearchMovie.value.trim()
+   var searchQuery = new RegExp(inputSearchMovie, 'gi')
+   var inputRatingMovie = Number(elInputRatingMovie.value)
+   var selectCategoryValue = elSelectCategory.value
+   // var selectFeaturesValue = elSelectFeatures.value
+
+   // Prevent form empty input
+   if (!(inputSearchMovie)) {
+      alert('Please, enter an appropriate name of movie!')
+      return
    }
 
 
-   // Features ============================================
-
-   // Create empty array to render for the end
-   var foundMoviesCategoriesFeatures = []
+   var foundMovies = findResults(searchQuery, inputRatingMovie, selectCategoryValue)
 
 
-   if (selectFeaturesValue === 'all') {
-
-      renderMovies(foundMoviesCategories)
-
-   } else if (selectFeaturesValue === 'a_z') {
-
-      foundMoviesCategoriesFeatures = foundMoviesCategories.sort((a, b) => {
-         if (a.title > b.title) {
-            return 1
-         } else if (a.title < b.title) {
-            return -1
-         } else {
-            return 0
-         }
-      })
-      renderMovies(foundMoviesCategoriesFeatures)
-
-   } else if (selectFeaturesValue === 'z_a') {
-
-      foundMoviesCategoriesFeatures = foundMoviesCategories.sort((b, a) => {
-         if (a.title > b.title) {
-            return 1
-         } else if (a.title < b.title) {
-            return -1
-         } else {
-            return 0
-         }
-      })
-      renderMovies(foundMoviesCategoriesFeatures)
-
-   } else if (selectFeaturesValue === 'the_latest') {
-
-      foundMoviesCategoriesFeatures = foundMoviesCategories.sort((a, b) => {
-         return b.year - a.year
-      })
-      renderMovies(foundMoviesCategoriesFeatures)
-
-   } else if (selectFeaturesValue === 'the_oldest') {
-
-      var foundMoviesCategoriesFeatures = foundMoviesCategories.sort((a, b) => {
-         return a.year - b.year
-      })
-      renderMovies(foundMoviesCategoriesFeatures)
-
-   } else if (selectFeaturesValue === 'highest_to_lowest') {
-
-      foundMoviesCategoriesFeatures = foundMoviesCategories.sort((a, b) => {
-         return b.imdb_rating - a.imdb_rating
-      })
-      renderMovies(foundMoviesCategoriesFeatures)
-
-   } else if (selectFeaturesValue === 'lowest_to_highest') {
-
-      foundMoviesCategoriesFeatures = foundMoviesCategories.sort((a, b) => {
-         return a.imdb_rating - b.imdb_rating
-      })
-      renderMovies(foundMoviesCategoriesFeatures)
-
-   }
-
+   renderMovies(foundMovies)
 
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // Show alert-danger when nothing is found
+// elBoxNotFoundMovies.classList.add('d-none')
+
+// if (!(foundMovies.length)) {
+//    elBoxNotFoundMovies.classList.remove('d-none')
+// }
