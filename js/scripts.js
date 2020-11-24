@@ -149,35 +149,14 @@ elFormMovies.addEventListener('submit', (evt) => {
    var foundMovies = findResults(searchQuery, inputRatingMovie, selectCategoryValue)
 
 
+
+   // Show alert-danger when nothing is found
+   elBoxNotFoundMovies.classList.add('d-none')
+
+   if (!(foundMovies.length)) {
+      elBoxNotFoundMovies.classList.remove('d-none')
+   }
+
    renderMovies(foundMovies)
 
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// // Show alert-danger when nothing is found
-// elBoxNotFoundMovies.classList.add('d-none')
-
-// if (!(foundMovies.length)) {
-//    elBoxNotFoundMovies.classList.remove('d-none')
-// }
