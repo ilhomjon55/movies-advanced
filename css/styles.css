@@ -77,3 +77,7 @@
  .site-content {
     flex-grow: 1;
  }
+
+ .movies__form-inner {
+    border-radius: 5px;
+ }

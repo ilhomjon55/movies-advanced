@@ -29,13 +29,13 @@ var normalizedMovies = movies.map((movie, i) => {
 })
 
 
-
 // Create element function
 var createNewMovie = (movie) => {
    // Clone template
    elNewMovie = elMovieTemplate.cloneNode(true)
 
    // Assign object data to elements of template 
+   $_('.movie', elNewMovie).dataset.imdbId = movie.imdbId
    $_('.movie__img', elNewMovie).src = movie.imgUrl
    $_('.movie__img', elNewMovie).alt = movie.title
    $_('.movie__heading', elNewMovie).textContent = movie.title
@@ -178,6 +178,11 @@ elFormMovies.addEventListener('submit', (evt) => {
    var selectCategoryValue = elSelectCategory.value
    var selectFeaturesValue = elSelectFeatures.value
 
+   // Prevent empty input
+   if (!(inputSearchMovie)) {
+      alert('Please, enter text!')
+      return
+   }
 
    // Final arrays
    var foundMovies = findResults(searchQuery, inputRatingMovie, selectCategoryValue)
@@ -196,6 +201,34 @@ elFormMovies.addEventListener('submit', (evt) => {
 
    // Render a final result
    renderMovies(sortedMovies)
+
+
+})
+
+
+
+var elMovieModal = $_('.movie-modal_template')
+
+
+
+elMoviesResultList.addEventListener('click', (evt) => {
+
+   if (evt.target.matches('.movie__btn-more')) {
+      var elClosestMovieLi = evt.target.closest('.movies__item')
+      var foundMovie = normalizedMovies.find((movie) => {
+         return movie.title.includes($_('.movie__heading', elClosestMovieLi).textContent)
+      })
+      console.log(foundMovie)
+   }
+
+   $_('.modal-title', elMovieModal).textContent = foundMovie.title
+   $_('.modal-summary', elMovieModal).textContent = foundMovie.summary
+   $_('.modal-categories', elMovieModal).textContent = foundMovie.categories.join(', ')
+   $_('.modal-trailer', elMovieModal).href = foundMovie.trailer
+   $_('.modal-language', elMovieModal).textContent = foundMovie.language
+   $_('.modal-released-year', elMovieModal).textContent = foundMovie.year
+   $_('.modal-imdb-id', elMovieModal).textContent = foundMovie.imdbId
+   $_('.modal-imdb-rating', elMovieModal).textContent = foundMovie.imdbRating
 
 
 })
