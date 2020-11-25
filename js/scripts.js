@@ -42,12 +42,11 @@ var createNewMovie = (movie) => {
    $_('.movie__id', elNewMovie).textContent = movie.id
    $_('.movie__year', elNewMovie).textContent = movie.year
    $_('.movie__categories', elNewMovie).textContent = movie.categories.join(', ')
-   $_('.movie__summary', elNewMovie).textContent = movie.summary
-   $_('.movie__imdb-id', elNewMovie).textContent = movie.imdbId
+   // $_('.movie__summary', elNewMovie).textContent = movie.summary
+   // $_('.movie__imdb-id', elNewMovie).textContent = movie.imdbId
    $_('.movie__imdb-rating', elNewMovie).textContent = movie.imdbRating
-   $_('.movie__youtube-link', elNewMovie).textContent = movie.trailer
    $_('.movie__youtube-link', elNewMovie).href = movie.trailer
-   $_('.movie__language', elNewMovie).textContent = movie.language
+   // $_('.movie__language', elNewMovie).textContent = movie.language
 
    return elNewMovie
 }
@@ -68,7 +67,7 @@ var renderMovies = (movies) => {
 }
 
 // Render first 100 of movies
-renderMovies(normalizedMovies.slice(0, 100))
+renderMovies(normalizedMovies.slice(160, 200))
 
 
 // Assign all categories to an array

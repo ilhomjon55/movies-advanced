@@ -19,48 +19,50 @@
       <div class="container-lg">
 
          <!-- Header -->
-         <h2 class="movies__heading h2 text-center my-3">Movies</h2>
+         <h2 class="movies__heading h1 text-center my-4">Movies</h2>
 
 
          <!-- Movies List -->
          <div class="row">
 
             <!-- Form search by Something -->
-            <form class="col-12 col-sm-4 js-movies__form" action="https://echo.htmlacademy.ru/">
+            <form class="col-10 col-md-5 js-movies__form mx-auto mx-md-0 mb-5 mb-md-0"
+               action="https://echo.htmlacademy.ru/">
 
 
                <div class="bg-white border border-info mb-5 m-sm-0 p-3">
 
-                  <h3 class="text-center h5 mb-4">Choose Movies By:</h3>
+                  <h3 class="text-center  mb-4">Choose Movies By:</h3>
 
                   <!-- Search by Title -->
-                  <label for="movie__search">Title:</label>
+                  <label class="h5" for="movie__search">Title:</label>
                   <input class="movies__input-search form-control mb-3 js-movies_search-input" type="search"
-                     id="movie__search" name="user_search" placeholder="Search movie..." aria-label="Search movie">
+                     id="movie__search" name="user_search" placeholder="Search movie..." aria-label="Search movie"
+                     required>
 
                   <!-- Select Categories -->
-                  <label for="movie__categories">Categories:</label>
+                  <label class="h5" for="movie__categories">Categories:</label>
                   <select class="custom-select mb-3 js-select-category" name="movie__categories" id="movie__categories">
                      <option value="all" selected>All</option>
                   </select>
 
                   <!-- Search by Title -->
-                  <label for="movie__search-rating">Rating:</label>
+                  <label class="h5" for="movie__search-rating">Rating:</label>
                   <input class="movies__input-rating form-control mb-3 js-movies_rating-input" type="number"
                      id="movie__search-rating" name="user_search-rating" placeholder="Rating..." value="5"
                      aria-label="Search movie by rating" required>
 
                   <!-- Features-->
-                  <label for="movie_features-sort">Features:</label>
+                  <label class="h5" for="movie_features-sort">Features:</label>
                   <select class="form-control mb-3 js-select-features" name="movie_features-sort"
                      id="movie_features-sort">
                      <option value="all" selected>All</option>
-                     <option value="a_z">Name(A-Z)</option>
-                     <option value="z_a">Name(Z-A)</option>
-                     <option value="high_to_low">Rating(high to low)</option>
-                     <option value="low_to_high">Rating(low to high)</option>
-                     <option value="the_latest">Year(latest)</option>
-                     <option value="the_oldest">Year(oldest)</option>
+                     <option value="a_z">Name (A-Z)</option>
+                     <option value="z_a">Name (Z-A)</option>
+                     <option value="high_to_low">Rating (high to low)</option>
+                     <option value="low_to_high">Rating (low to high)</option>
+                     <option value="the_latest">Year (latest)</option>
+                     <option value="the_oldest">Year (oldest)</option>
                   </select>
 
                   <button class="btn btn-block btn-info">Search</button>
@@ -69,8 +71,8 @@
             </form>
 
             <!-- Movies side -->
-            <div class="col-12 col-sm-8">
-               <ul class="movies__list list-unstyled  row flex-wrap  js-movies__list mx-auto m-sm-0"></ul>
+            <div class="col-10 col-md-7 mx-auto mx-md-0">
+               <ul class="movies__list list-unstyled  row flex-wrap  js-movies__list "></ul>
 
                <div class="d-none alert alert-danger p-3 js-movies__not-found">
                   Sorry we are failed to find this movie
@@ -85,53 +87,53 @@
    <!-- Movies Item Template -->
    <template id="movie_template">
 
-      <li class="movies__item movie col-12 col-md-6 mb-4 ">
+      <li class="movies__item movie card col-md-5    mt-0 mb-3 mx-3  p-0">
 
-         <div class="movie__inner p-3 border border-info bg-white h-100">
+         <img class="movie__img card-img-top img-fluid" src="https://via.placeholder.com/400x250" width="400"
+            height="250">
 
-            <img class="movie__img img-fluid mb-3" src="https://via.placeholder.com/400x250" width="400" height="250">
+         <div class="movie__inner card-body p-3  bg-white h-100">
 
-            <h3 class="movie__heading h5 text-center mb-2 font-weight-bold">Strange Magic</h3>
+            <h3 class="movie__heading card-title h5 text-center mb-2 font-weight-bold">Strange Magic</h3>
 
-            <p>Movie Id:
-               <span class="movie__id text-info">1</span>
-            </p>
+            <div class="d-flex  align-items-center mb-2">
+               <img class="mr-2" src="img/beenhere-24px.svg" alt="Id" aria-hidden="true" width="25" height="25">
+               <p class="m-0">Movie Id:
+                  <span class="movie__id text-info">1</span>
+               </p>
+            </div>
 
-            <p>Released:
-               <span class="movie__year text-info">2019</span>
-            </p>
 
-            <p>Categories:
-               <span class="movie__categories text-info">
-                  Adventure, Animation, Comedy, Family, Fantasy
-               </span>
-            </p>
+            <div class="d-flex  align-items-center mb-2">
+               <img class="mr-2" src="img/theaters-24px.svg" alt="Theatres icon" aria-hidden="true" width="25"
+                  height="25">
+               <p class="m-0">Released:
+                  <span class="movie__year text-info">2019</span>
+               </p>
+            </div>
 
-            <p>Summary:
-               <span class="movie__summary text-info">
-                  Strange Magic, a new animated film, is a madcap fairy tale musical inspired by A Midsummer Night's
-                  Dream. Popular songs from the past six decades help tell the tale of a colorful cast of goblins,
-                  elves,
-                  fairies and imps, and their hilarious misadventures sparked by the battle over a powerful potion.
-               </span>
-            </p>
+            <div class="d-flex  align-items-center mb-2">
+               <img class="mr-2" src="img/category-24px.svg" alt="Categories icon" aria-hidden="true" width="25"
+                  height="25">
+               <p class="m-0">Categories:
+                  <span class="movie__categories text-info">
+                     Adventure, Animation, Comedy, Family, Fantasy
+                  </span>
+               </p>
+            </div>
 
-            <p>Imdb Id:
-               <span class="movie__imdb-id text-info">tt4191054</span>
-            </p>
+            <div class="d-flex  align-items-center mb-2">
+               <img class="mr-2" src="img/star_rate-24px.svg" alt="Rating" aria-hidden="true" width="25" height="25">
+               <p class="m-0">Imdb Rating:
+                  <span class="movie__imdb-rating text-info">5.8</span>
+               </p>
+            </div>
 
-            <p>Imdb Rating:
-               <span class="movie__imdb-rating text-info">5.8</span>
-            </p>
 
-            <p>Language:
-               <span class="movie__language text-info">English</span>
-            </p>
-
-            <p>Trailer:
-               <a class="movie__youtube-link text-info" href="#"
-                  target="_blank">https://www.youtube.com/watch?v=Xr9iLfD6xus</a>
-            </p>
+            <div class="d-flex  align-items-center mb-2 text-primary">
+               <img class="mr-2" src="img/launch-24px.svg" alt="Link icon" aria-hidden="true" width="25" height="25">
+               <a class="movie__youtube-link m-0" href="" target="_blank">Trailer:</a>
+            </div>
 
          </div>
       </li>
