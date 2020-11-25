@@ -36,15 +36,12 @@
                   <!-- Search by Title -->
                   <label for="movie__search">Title:</label>
                   <input class="movies__input-search form-control mb-3 js-movies_search-input" type="search"
-                     id="movie__search" name="user_search" placeholder="Search movie..." aria-label="Search movie"
-                     required>
+                     id="movie__search" name="user_search" placeholder="Search movie..." aria-label="Search movie">
 
                   <!-- Select Categories -->
                   <label for="movie__categories">Categories:</label>
-                  <select class="custom-select mb-3 js-select-category" name="movie__categories" id="movie__categories"
-                     required>
-                     <option value="">Please select</option>
-                     <option value="all">All</option>
+                  <select class="custom-select mb-3 js-select-category" name="movie__categories" id="movie__categories">
+                     <option value="all" selected>All</option>
                   </select>
 
                   <!-- Search by Title -->
@@ -54,18 +51,17 @@
                      aria-label="Search movie by rating" required>
 
                   <!-- Features-->
-                  <!-- <label for="movie_features-sort">Features:</label>
+                  <label for="movie_features-sort">Features:</label>
                   <select class="form-control mb-3 js-select-features" name="movie_features-sort"
-                     id="movie_features-sort" required>
-                     <option value="">Please select</option>
-                     <option value="all">All</option>
+                     id="movie_features-sort">
+                     <option value="all" selected>All</option>
                      <option value="a_z">Name(A-Z)</option>
                      <option value="z_a">Name(Z-A)</option>
-                     <option value="the_latest">Year(latest)</option>
-                     <option value="the_oldest">Year(oldest)</option>
                      <option value="high_to_low">Rating(high to low)</option>
                      <option value="low_to_high">Rating(low to high)</option>
-                  </select> -->
+                     <option value="the_latest">Year(latest)</option>
+                     <option value="the_oldest">Year(oldest)</option>
+                  </select>
 
                   <button class="btn btn-block btn-info">Search</button>
                </div>

@@ -20,9 +20,9 @@ var normalizedMovies = movies.map((movie, i) => {
       year: movie.movie_year,
       categories: movie.Categories.split('|'),
       summary: movie.summary,
-      img_url: `http://i3.ytimg.com/vi/${movie.ytid}/hqdefault.jpg`,
-      imdb_id: movie.imdb_id,
-      imdb_rating: movie.imdb_rating,
+      imgUrl: `http://i3.ytimg.com/vi/${movie.ytid}/hqdefault.jpg`,
+      imdbId: movie.imdb_id,
+      imdbRating: movie.imdb_rating,
       language: movie.language,
       trailer: `https://www.youtube.com/watch?v=${movie.ytid}`
    }
@@ -36,15 +36,15 @@ var createNewMovie = (movie) => {
    elNewMovie = elMovieTemplate.cloneNode(true)
 
    // Assign object data to elements of template 
-   $_('.movie__img', elNewMovie).src = movie.img_url
+   $_('.movie__img', elNewMovie).src = movie.imgUrl
    $_('.movie__img', elNewMovie).alt = movie.title
    $_('.movie__heading', elNewMovie).textContent = movie.title
    $_('.movie__id', elNewMovie).textContent = movie.id
    $_('.movie__year', elNewMovie).textContent = movie.year
    $_('.movie__categories', elNewMovie).textContent = movie.categories.join(', ')
    $_('.movie__summary', elNewMovie).textContent = movie.summary
-   $_('.movie__imdb-id', elNewMovie).textContent = movie.imdb_id
-   $_('.movie__imdb-rating', elNewMovie).textContent = movie.imdb_rating
+   $_('.movie__imdb-id', elNewMovie).textContent = movie.imdbId
+   $_('.movie__imdb-rating', elNewMovie).textContent = movie.imdbRating
    $_('.movie__youtube-link', elNewMovie).textContent = movie.trailer
    $_('.movie__youtube-link', elNewMovie).href = movie.trailer
    $_('.movie__language', elNewMovie).textContent = movie.language
@@ -110,17 +110,58 @@ createElOption(movieCategories, elSelectCategory)
 
 var findResults = (inputTitle, minRating, category) => {
 
-   return normalizedMovies.filter((movie) => {
+   var result = normalizedMovies.filter((movie) => {
 
       if (category === 'all') {
-         var condition = movie.title.match(inputTitle) && movie.imdb_rating >= minRating
+         var condition = movie.title.match(inputTitle) && movie.imdbRating >= minRating
       } else {
-         var condition = movie.title.match(inputTitle) && movie.imdb_rating >= minRating && movie.categories.includes(category)
+         var condition = movie.title.match(inputTitle) && movie.imdbRating >= minRating && movie.categories.includes(category)
       }
 
       return condition
    })
 
+   return result
+
+}
+
+
+// Sorting Obj Alphabetical
+var sortObjAlphabet = (array) => {
+   return array.sort((a, b) => {
+      if (a.title > b.title) {
+         return 1
+      } else if (a.title < b.title) {
+         return -1
+      }
+      return 0
+   })
+}
+
+// Sorting Obj by Rating
+var sortObjRating = array => array.sort((a, b) => b.imdbRating - a.imdbRating)
+
+// Sorting Obj by Year
+var sortObjYear = array => array.sort((a, b) => b.year - a.year)
+
+
+// Allocating sorting function according to features choice
+var sortMovies = (array, features) => {
+   if (features === 'all') {
+      return array
+   } else if (features === 'a_z') {
+      return sortObjAlphabet(array)
+   } else if (features === 'z_a') {
+      return sortObjAlphabet(array).reverse()
+   } else if (features === 'high_to_low') {
+      return sortObjRating(array)
+   } else if (features === 'low_to_high') {
+      return sortObjRating(array).reverse()
+   } else if (features === 'the_latest') {
+      return sortObjYear(array)
+   } else if (features === 'the_oldest') {
+      return sortObjYear(array).reverse()
+   }
 }
 
 
@@ -131,32 +172,31 @@ Listen elFormMovies
 elFormMovies.addEventListener('submit', (evt) => {
    evt.preventDefault()
 
-
-   // Get select values
+   // Get input, select values
    var inputSearchMovie = elInputSearchMovie.value.trim()
    var searchQuery = new RegExp(inputSearchMovie, 'gi')
    var inputRatingMovie = Number(elInputRatingMovie.value)
    var selectCategoryValue = elSelectCategory.value
-   // var selectFeaturesValue = elSelectFeatures.value
-
-   // Prevent form empty input
-   if (!(inputSearchMovie)) {
-      alert('Please, enter an appropriate name of movie!')
-      return
-   }
+   var selectFeaturesValue = elSelectFeatures.value
 
 
+   // Final arrays
    var foundMovies = findResults(searchQuery, inputRatingMovie, selectCategoryValue)
-
+   var sortedMovies = sortMovies(foundMovies, selectFeaturesValue)
 
 
    // Show alert-danger when nothing is found
    elBoxNotFoundMovies.classList.add('d-none')
 
-   if (!(foundMovies.length)) {
+   if (!(sortedMovies.length)) {
+      elMoviesResultList.innerHTML = ''
       elBoxNotFoundMovies.classList.remove('d-none')
+      return
    }
 
-   renderMovies(foundMovies)
+
+   // Render a final result
+   renderMovies(sortedMovies)
+
 
 })
