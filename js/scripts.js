@@ -203,19 +203,19 @@ elFormMovies.addEventListener('submit', (evt) => {
 })
 
 
-
 var elMovieModal = $_('.movie-modal_template')
-
 
 
 elMoviesResultList.addEventListener('click', (evt) => {
 
    if (evt.target.matches('.movie__btn-more')) {
+
       var elClosestMovieLi = evt.target.closest('.movies__item')
+
       var foundMovie = normalizedMovies.find((movie) => {
          return movie.title.includes($_('.movie__heading', elClosestMovieLi).textContent)
       })
-      console.log(foundMovie)
+
    }
 
    $_('.modal-title', elMovieModal).textContent = foundMovie.title
