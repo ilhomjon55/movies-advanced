@@ -25,50 +25,65 @@
          <!-- Movies List -->
          <div class="row">
 
-            <!-- Form search by Something -->
-            <form class="movies__form col-10 col-md-4 js-movies__form mx-auto mx-md-0 mb-5 mb-md-0"
-               action="https://echo.htmlacademy.ru/" autocomplete="off">
+            <!-- Left side -->
+            <div class="col-10 col-md-4 mx-auto mx-md-0 mb-5 mb-md-0">
+
+               <!-- Form search by Something -->
+               <form class="movies__form  js-movies__form mb-4" action="https://echo.htmlacademy.ru/"
+                  autocomplete="off">
+
+                  <div class="movies__form-inner bg-white border border-info mb-5 m-sm-0 p-3">
+
+                     <h3 class="text-center  mb-4">Choose Movies By:</h3>
+
+                     <!-- Search by Title -->
+                     <label class="h5" for="movie__search">Title:</label>
+                     <input class="movies__input-search form-control mb-3 js-movies_search-input" type="search"
+                        id="movie__search" name="user_search" placeholder="Search movie..." aria-label="Search movie"
+                        value="King" required>
+
+                     <!-- Select Categories -->
+                     <label class="h5" for="movie__categories">Categories:</label>
+                     <select class="custom-select mb-3 js-select-category" name="movie__categories"
+                        id="movie__categories">
+                        <option value="all" selected>All</option>
+                     </select>
+
+                     <!-- Search by Title -->
+                     <label class="h5" for="movie__search-rating">Rating:</label>
+                     <input class="movies__input-rating form-control mb-3 js-movies_rating-input" type="number"
+                        id="movie__search-rating" name="user_search-rating" placeholder="Rating..." value="5"
+                        aria-label="Search movie by rating" required>
+
+                     <!-- Features-->
+                     <label class="h5" for="movie_features-sort">Features:</label>
+                     <select class="form-control mb-3 js-select-features" name="movie_features-sort"
+                        id="movie_features-sort">
+                        <option value="all" selected>All</option>
+                        <option value="a_z">Name (A-Z)</option>
+                        <option value="z_a">Name (Z-A)</option>
+                        <option value="high_to_low">Rating (high to low)</option>
+                        <option value="low_to_high">Rating (low to high)</option>
+                        <option value="the_latest">Year (latest)</option>
+                        <option value="the_oldest">Year (oldest)</option>
+                     </select>
+
+                     <button class="btn btn-block btn-info">Search</button>
+
+                  </div>
+
+               </form>
 
 
-               <div class="movies__form-inner bg-white border border-info mb-5 m-sm-0 p-3">
-
-                  <h3 class="text-center  mb-4">Choose Movies By:</h3>
-
-                  <!-- Search by Title -->
-                  <label class="h5" for="movie__search">Title:</label>
-                  <input class="movies__input-search form-control mb-3 js-movies_search-input" type="search"
-                     id="movie__search" name="user_search" placeholder="Search movie..." aria-label="Search movie"
-                     value="King" required>
-
-                  <!-- Select Categories -->
-                  <label class="h5" for="movie__categories">Categories:</label>
-                  <select class="custom-select mb-3 js-select-category" name="movie__categories" id="movie__categories">
-                     <option value="all" selected>All</option>
-                  </select>
-
-                  <!-- Search by Title -->
-                  <label class="h5" for="movie__search-rating">Rating:</label>
-                  <input class="movies__input-rating form-control mb-3 js-movies_rating-input" type="number"
-                     id="movie__search-rating" name="user_search-rating" placeholder="Rating..." value="5"
-                     aria-label="Search movie by rating" required>
-
-                  <!-- Features-->
-                  <label class="h5" for="movie_features-sort">Features:</label>
-                  <select class="form-control mb-3 js-select-features" name="movie_features-sort"
-                     id="movie_features-sort">
-                     <option value="all" selected>All</option>
-                     <option value="a_z">Name (A-Z)</option>
-                     <option value="z_a">Name (Z-A)</option>
-                     <option value="high_to_low">Rating (high to low)</option>
-                     <option value="low_to_high">Rating (low to high)</option>
-                     <option value="the_latest">Year (latest)</option>
-                     <option value="the_oldest">Year (oldest)</option>
-                  </select>
-
-                  <button class="btn btn-block btn-info">Search</button>
+               <!-- Bookmarks -->
+               <div class="bg-white  border border-info bookmarks__heading">
+                  <h3 class=" h4 text-center  p-3 mx-auto">
+                     Bookmarks
+                  </h3>
+                  <ul class="bookmarks__list list-group">
+                  </ul>
                </div>
-
-            </form>
+            </div>
 
             <!-- Movies side -->
             <div class="col-10 col-md-7 mx-auto mx-md-0">
@@ -85,7 +100,7 @@
 
    <!-- Modal -->
 
-   <div class="movie-modal_template modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+   <div class="movie-modal modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
       aria-hidden="true">
       <div class="modal-dialog modal-dialog-scrollable">
          <div class="modal-content">
@@ -188,14 +203,25 @@
                   </button>
                   <a class="movie__youtube-link btn btn-block btn-sm btn-warning m-1" href=""
                      target="_blank">Trailer:</a>
-                  <button class="btn btn-block btn-sm btn-success m-1">Bookmark</button>
+                  <button class="movie__bookmark btn btn-block btn-sm btn-success m-1">Bookmark</button>
                </div>
+
             </div>
 
-
          </div>
+
       </li>
 
+   </template>
+
+
+   <!-- Bookmarks template -->
+   <template id="bookamrks__template">
+      <li class="bookmarks__item list-group-item d-flex
+      flex-column">
+         <h4 class="bookmarks__title h5">Avengers</h4>
+         <button class="bookmark__remove btn btn-danger btn-sm  align-self-end">Remove</button>
+      </li>
    </template>
 
    <script src="js/jquery-3.5.1.min.js"></script>
@@ -206,4 +232,3 @@
 </body>
 
 </html>
->>>>>>> new-advanced

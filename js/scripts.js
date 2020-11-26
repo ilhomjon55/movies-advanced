@@ -7,7 +7,7 @@ var elSelectFeatures = $_('.js-select-features', elFormMovies)
 var elMoviesResultList = $_('.js-movies__list')
 var elBoxNotFoundMovies = $_('.js-movies__not-found')
 var elMovieTemplate = $_('#movie_template').content
-
+var elBookmarksList = $_('.bookmarks__list')
 
 /* =======================================================
 Normalize Movies Array
@@ -203,29 +203,123 @@ elFormMovies.addEventListener('submit', (evt) => {
 })
 
 
-var elMovieModal = $_('.movie-modal_template')
+
+// Clone bookmark template
+var elBookmarkTemplate = $_('#bookamrks__template').content
 
 
+// Create bookmark function
+
+var createNewBookmark = movie => {
+   // Clone template
+   elNewBookmark = elBookmarkTemplate.cloneNode(true)
+
+   // Assign object data to elements of template 
+   $_('.bookmarks__item', elNewBookmark).dataset.imdbId = movie.imdbId
+   $_('.bookmarks__title', elNewBookmark).textContent = movie.title
+   $_('.bookmark__remove', elNewBookmark).dataset.imdbId = movie.imdbId
+
+   return elNewBookmark
+}
+
+
+// Global render movies function
+var renderBookmarks = movies => {
+
+   elBookmarksList.innerHTML = ''
+
+   var elFragementMovies = document.createDocumentFragment()
+
+   movies.forEach(movie => {
+      elFragementMovies.appendChild(createNewBookmark(movie))
+   })
+
+   return elBookmarksList.appendChild(elFragementMovies)
+}
+
+
+// Create golabal bookmarks Array
+let bookmarksArr = []
+
+
+// Get movie modal element
+var elMovieModal = $_('.movie-modal')
+
+
+var bookmarkMovie = (foundMovie) => {
+
+   var doesExist = false
+   bookmarksArr.forEach(movie => {
+      if (movie.imdbId === foundMovie.imdbId) {
+         doesExist = true
+      }
+
+   })
+
+   if (!(doesExist)) {
+      bookmarksArr.push(foundMovie)
+   }
+}
+
+// Listen elMoviesResultList
 elMoviesResultList.addEventListener('click', (evt) => {
 
+   // Match more btn and assign values
    if (evt.target.matches('.movie__btn-more')) {
 
+      // Get closest li
       var elClosestMovieLi = evt.target.closest('.movies__item')
 
+      // Find clicked li
       var foundMovie = normalizedMovies.find((movie) => {
-         return movie.title.includes($_('.movie__heading', elClosestMovieLi).textContent)
+         return movie.imdbId === elClosestMovieLi.dataset.imdbId
       })
+
+      // Assign values to li
+      $_('.modal-title', elMovieModal).textContent = foundMovie.title
+      $_('.modal-summary', elMovieModal).textContent = foundMovie.summary
+      $_('.modal-categories', elMovieModal).textContent = foundMovie.categories.join(', ')
+      $_('.modal-trailer', elMovieModal).href = foundMovie.trailer
+      $_('.modal-language', elMovieModal).textContent = foundMovie.language
+      $_('.modal-released-year', elMovieModal).textContent = foundMovie.year
+      $_('.modal-imdb-id', elMovieModal).textContent = foundMovie.imdbId
+      $_('.modal-imdb-rating', elMovieModal).textContent = foundMovie.imdbRating
+
+
+   } else if (evt.target.matches('.movie__bookmark')) {
+      var elBookmark = evt.target.closest('li')
+
+
+      var foundMovie = normalizedMovies.find((movie) => {
+         return movie.imdbId === elBookmark.dataset.imdbId
+      })
+
+
+      bookmarkMovie(foundMovie)
 
    }
 
-   $_('.modal-title', elMovieModal).textContent = foundMovie.title
-   $_('.modal-summary', elMovieModal).textContent = foundMovie.summary
-   $_('.modal-categories', elMovieModal).textContent = foundMovie.categories.join(', ')
-   $_('.modal-trailer', elMovieModal).href = foundMovie.trailer
-   $_('.modal-language', elMovieModal).textContent = foundMovie.language
-   $_('.modal-released-year', elMovieModal).textContent = foundMovie.year
-   $_('.modal-imdb-id', elMovieModal).textContent = foundMovie.imdbId
-   $_('.modal-imdb-rating', elMovieModal).textContent = foundMovie.imdbRating
 
+
+   renderBookmarks(bookmarksArr)
+})
+
+
+
+elBookmarksList.addEventListener('click', (evt) => {
+   if (evt.target.matches('.bookmark__remove')) {
+      var elBookmarkLi = evt.target.closest('li')
+      elBookmarkLi.remove()
+
+      var foundBookmark = bookmarksArr.find(movie => {
+         return movie.imdbId === elBookmarkLi.dataset.imdbId
+      })
+
+      bookmarksArr.forEach((movie, index) => {
+         if (movie.imdbId === foundBookmark.imdbId)
+            bookmarksArr.splice(index, 1)
+      })
+      console.log(bookmarksArr)
+   }
 
 })
