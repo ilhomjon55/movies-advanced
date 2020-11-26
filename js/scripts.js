@@ -85,6 +85,7 @@ normalizedMovies.forEach((movie) => {
 // Sort the categories array
 movieCategories.sort()
 
+
 // Function to create option elements and append to select
 var createElOption = (arr, elAppend) => {
    var elCategoryOptions = document.createDocumentFragment();
@@ -99,11 +100,11 @@ var createElOption = (arr, elAppend) => {
    return elAppend.appendChild(elCategoryOptions)
 }
 
-
 // Add movieCategories to elSelectCategory
 createElOption(movieCategories, elSelectCategory)
 
 
+// Find movies Result validate by title, reting, category
 var findResults = (inputTitle, minRating, category) => {
 
    var result = normalizedMovies.filter((movie) => {
@@ -208,8 +209,7 @@ elFormMovies.addEventListener('submit', (evt) => {
 var elBookmarkTemplate = $_('#bookamrks__template').content
 
 
-// Create bookmark function
-
+// Create bookmark function ============================
 var createNewBookmark = movie => {
    // Clone template
    elNewBookmark = elBookmarkTemplate.cloneNode(true)
@@ -223,7 +223,7 @@ var createNewBookmark = movie => {
 }
 
 
-// Global render movies function
+// Global render movies function =============================
 var renderBookmarks = movies => {
 
    elBookmarksList.innerHTML = ''
@@ -238,7 +238,7 @@ var renderBookmarks = movies => {
 }
 
 
-// Create golabal bookmarks Array
+// Create golabal bookmarks Array 
 let bookmarksArr = []
 
 
@@ -246,7 +246,8 @@ let bookmarksArr = []
 var elMovieModal = $_('.movie-modal')
 
 
-var bookmarkMovie = (foundMovie) => {
+// Validate wethear movie is added
+var doesMovieBookmarked = (foundMovie) => {
 
    var doesExist = false
    bookmarksArr.forEach(movie => {
@@ -256,12 +257,14 @@ var bookmarkMovie = (foundMovie) => {
 
    })
 
+   // Push if movie does not exist
    if (!(doesExist)) {
       bookmarksArr.push(foundMovie)
    }
 }
 
-// Listen elMoviesResultList
+
+// Listen elMoviesResultList =================================
 elMoviesResultList.addEventListener('click', (evt) => {
 
    // Match more btn and assign values
@@ -287,39 +290,42 @@ elMoviesResultList.addEventListener('click', (evt) => {
 
 
    } else if (evt.target.matches('.movie__bookmark')) {
+
       var elBookmark = evt.target.closest('li')
 
-
+      // Find bookmarked movie
       var foundMovie = normalizedMovies.find((movie) => {
          return movie.imdbId === elBookmark.dataset.imdbId
       })
 
 
-      bookmarkMovie(foundMovie)
-
+      doesMovieBookmarked(foundMovie)
+      renderBookmarks(bookmarksArr)
    }
 
 
-
-   renderBookmarks(bookmarksArr)
 })
 
 
-
+// Listen elBookmarksList ===================================
 elBookmarksList.addEventListener('click', (evt) => {
+
    if (evt.target.matches('.bookmark__remove')) {
+
+      // Delete choosed li
       var elBookmarkLi = evt.target.closest('li')
       elBookmarkLi.remove()
 
+      // Find deletable li's object
       var foundBookmark = bookmarksArr.find(movie => {
          return movie.imdbId === elBookmarkLi.dataset.imdbId
       })
 
+      // Find that object and splice from array as well
       bookmarksArr.forEach((movie, index) => {
          if (movie.imdbId === foundBookmark.imdbId)
             bookmarksArr.splice(index, 1)
       })
-      console.log(bookmarksArr)
    }
 
 })
