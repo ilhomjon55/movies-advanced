@@ -240,11 +240,14 @@ var doesMovieBookmarked = (foundMovie) => {
    // Push if movie does not exist
    if (!doesExist) {
       bookmarksArr.push(foundMovie)
+      localStorage.setItem('bookmarks', JSON.stringify(bookmarksArr))
+
    }
 }
 
 // *********** Listen elMoviesResultList **************
 elMoviesResultList.addEventListener('click', (evt) => {
+
    // Match more btn and assign values
    if (evt.target.matches('.movie__btn-more')) {
       // Get closest li
@@ -276,7 +279,7 @@ elMoviesResultList.addEventListener('click', (evt) => {
       })
 
       doesMovieBookmarked(foundMovie)
-      renderBookmarks(bookmarksArr)
+      renderBookmarks(JSON.parse(localStorage.getItem('bookmarks')))
    }
 })
 
@@ -293,8 +296,26 @@ elBookmarksList.addEventListener('click', (evt) => {
       })
 
       // Find that object and splice from array as well
-      bookmarksArr.forEach((movie, index) => {
-         if (movie.imdbId === foundBookmark.imdbId) bookmarksArr.splice(index, 1)
+      var bookmarIndex = bookmarksArr.findIndex((movie) => {
+         return movie.imdbId === foundBookmark.imdbId
       })
+      bookmarksArr.splice(bookmarIndex, 1)
    }
 })
+
+
+
+/* =================================================
+localStorage Features
+================================================= */
+
+var elBtnClearInfo = $_('.js-clear-info__btn')
+
+elBtnClearInfo.addEventListener('click', () => {
+   localStorage.clear()
+})
+
+
+if (!localStorage.getItem('name')) {
+   localStorage.setItem('name', prompt('Enter name:'))
+}
