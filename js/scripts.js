@@ -209,7 +209,7 @@ var createNewBookmark = (movie) => {
   return elNewBookmark;
 };
 
-// Global render movies function =============================
+// ******************  Global render movies function **************************
 var renderBookmarks = (movies) => {
   elBookmarksList.innerHTML = "";
 
@@ -243,7 +243,7 @@ var doesMovieBookmarked = (foundMovie) => {
   }
 };
 
-// Listen elMoviesResultList =================================
+// ********************** Listen elMoviesResultList *************************
 elMoviesResultList.addEventListener("click", (evt) => {
   // Match more btn and assign values
   if (evt.target.matches(".movie__btn-more")) {
