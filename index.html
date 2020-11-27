@@ -1,234 +1,312 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <title>Movies Advanced</title>
+  </head>
 
-<head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="css/bootstrap.min.css">
-   <link rel="stylesheet" href="css/styles.css">
-   <title>Movies Advanced</title>
-</head>
+  <body class="bg-light">
+    <h1 class="sr-only">Page of movies</h1>
 
-<body class="bg-light">
-
-   <h1 class="sr-only">Page of movies</h1>
-
-
-   <main>
-
+    <main>
       <div class="container-lg">
+        <!-- Header -->
+        <h2 class="movies__heading h1 text-center my-4">Movies</h2>
 
-         <!-- Header -->
-         <h2 class="movies__heading h1 text-center my-4">Movies</h2>
+        <!-- Movies List -->
+        <div class="row">
+          <!-- Left side -->
+          <div class="col-10 col-md-4 mx-auto mx-md-0 mb-5 mb-md-0">
+            <!-- Form search by Something -->
+            <form
+              class="movies__form js-movies__form mb-4"
+              action="https://echo.htmlacademy.ru/"
+              autocomplete="off"
+            >
+              <div
+                class="movies__form-inner bg-white border border-info mb-5 m-sm-0 p-3"
+              >
+                <h3 class="text-center mb-4">Choose Movies By:</h3>
 
+                <!-- Search by Title -->
+                <label class="h5" for="movie__search">Title:</label>
+                <input
+                  class="movies__input-search form-control mb-3 js-movies_search-input"
+                  type="search"
+                  id="movie__search"
+                  name="user_search"
+                  placeholder="Search movie..."
+                  aria-label="Search movie"
+                  value="King"
+                  required
+                />
 
-         <!-- Movies List -->
-         <div class="row">
+                <!-- Select Categories -->
+                <label class="h5" for="movie__categories">Categories:</label>
+                <select
+                  class="custom-select mb-3 js-select-category"
+                  name="movie__categories"
+                  id="movie__categories"
+                >
+                  <option value="all" selected>All</option>
+                </select>
 
-            <!-- Left side -->
-            <div class="col-10 col-md-4 mx-auto mx-md-0 mb-5 mb-md-0">
+                <!-- Search by Title -->
+                <label class="h5" for="movie__search-rating">Rating:</label>
+                <input
+                  class="movies__input-rating form-control mb-3 js-movies_rating-input"
+                  type="number"
+                  id="movie__search-rating"
+                  name="user_search-rating"
+                  placeholder="Rating..."
+                  value="5"
+                  aria-label="Search movie by rating"
+                  required
+                />
 
-               <!-- Form search by Something -->
-               <form class="movies__form  js-movies__form mb-4" action="https://echo.htmlacademy.ru/"
-                  autocomplete="off">
+                <!-- Features-->
+                <label class="h5" for="movie_features-sort">Features:</label>
+                <select
+                  class="form-control mb-3 js-select-features"
+                  name="movie_features-sort"
+                  id="movie_features-sort"
+                >
+                  <option value="all" selected>All</option>
+                  <option value="a_z">Name (A-Z)</option>
+                  <option value="z_a">Name (Z-A)</option>
+                  <option value="high_to_low">Rating (high to low)</option>
+                  <option value="low_to_high">Rating (low to high)</option>
+                  <option value="the_latest">Year (latest)</option>
+                  <option value="the_oldest">Year (oldest)</option>
+                </select>
 
-                  <div class="movies__form-inner bg-white border border-info mb-5 m-sm-0 p-3">
+                <button class="btn btn-block btn-info">Search</button>
+              </div>
+            </form>
 
-                     <h3 class="text-center  mb-4">Choose Movies By:</h3>
-
-                     <!-- Search by Title -->
-                     <label class="h5" for="movie__search">Title:</label>
-                     <input class="movies__input-search form-control mb-3 js-movies_search-input" type="search"
-                        id="movie__search" name="user_search" placeholder="Search movie..." aria-label="Search movie"
-                        value="King" required>
-
-                     <!-- Select Categories -->
-                     <label class="h5" for="movie__categories">Categories:</label>
-                     <select class="custom-select mb-3 js-select-category" name="movie__categories"
-                        id="movie__categories">
-                        <option value="all" selected>All</option>
-                     </select>
-
-                     <!-- Search by Title -->
-                     <label class="h5" for="movie__search-rating">Rating:</label>
-                     <input class="movies__input-rating form-control mb-3 js-movies_rating-input" type="number"
-                        id="movie__search-rating" name="user_search-rating" placeholder="Rating..." value="5"
-                        aria-label="Search movie by rating" required>
-
-                     <!-- Features-->
-                     <label class="h5" for="movie_features-sort">Features:</label>
-                     <select class="form-control mb-3 js-select-features" name="movie_features-sort"
-                        id="movie_features-sort">
-                        <option value="all" selected>All</option>
-                        <option value="a_z">Name (A-Z)</option>
-                        <option value="z_a">Name (Z-A)</option>
-                        <option value="high_to_low">Rating (high to low)</option>
-                        <option value="low_to_high">Rating (low to high)</option>
-                        <option value="the_latest">Year (latest)</option>
-                        <option value="the_oldest">Year (oldest)</option>
-                     </select>
-
-                     <button class="btn btn-block btn-info">Search</button>
-
-                  </div>
-
-               </form>
-
-
-               <!-- Bookmarks -->
-               <div class="bg-white  border border-info bookmarks__heading">
-                  <h3 class=" h4 text-center  p-3 mx-auto">
-                     Bookmarks
-                  </h3>
-                  <ul class="bookmarks__list list-group">
-                  </ul>
-               </div>
+            <!-- Bookmarks -->
+            <div class="bg-white border border-info bookmarks__heading">
+              <h3 class="h4 text-center p-3 mx-auto">Bookmarks</h3>
+              <ul class="bookmarks__list list-group"></ul>
             </div>
+          </div>
 
-            <!-- Movies side -->
-            <div class="col-10 col-md-7 mx-auto mx-md-0">
-               <ul class="movies__list list-unstyled  row flex-wrap  js-movies__list "></ul>
+          <!-- Movies side -->
+          <div class="col-10 col-md-7 mx-auto mx-md-0">
+            <ul
+              class="movies__list list-unstyled row flex-wrap js-movies__list"
+            ></ul>
 
-               <div class="d-none alert alert-danger p-3 js-movies__not-found">
-                  Sorry we are failed to find this movie
-               </div>
+            <div class="d-none alert alert-danger p-3 js-movies__not-found">
+              Sorry we are failed to find this movie
             </div>
-         </div>
+          </div>
+        </div>
       </div>
+    </main>
 
-   </main>
+    <!-- Modal -->
 
-   <!-- Modal -->
-
-   <div class="movie-modal modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
+    <div
+      class="movie-modal modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
       <div class="modal-dialog modal-dialog-scrollable">
-         <div class="modal-content">
-            <div class="modal-header">
-               <h5 class="modal-title h2 text-center text-info" id="exampleModalLabel">Modal title</h5>
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-               </button>
-            </div>
-            <div class="modal-body">
-               <p>
-                  <span class="h5 d-block">Summary:</span>
-                  <span class="modal-summary"></span>
-               </p>
-               <p>
-                  <span class="h5 d-block">Categories:</span>
-                  <span class="modal-categories"></span>
-               </p>
-               <p>
-                  <span class="h5 d-block">Language:</span>
-                  <span class="modal-language"></span>
-               </p>
-               <p>
-                  <span class="h5 d-block">Released Year:</span>
-                  <span class="modal-released-year"></span>
-               </p>
-               <p>
-                  <span class="h5 d-block">Imdb Id:</span>
-                  <span class="modal-imdb-id"></span>
-               </p>
-               <p>
-                  <span class="h5 d-block">Imdb Rating:</span>
-                  <span class="modal-imdb-rating"></span>
-               </p>
-            </div>
-            <div class="modal-footer justify-content-between">
-               <a class="modal-trailer btn btn-outline-danger btn-sm" href="" target="_blank">
-                  <span class="h5 d-block m-0">Watch Trailer</span>
-               </a>
-               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-         </div>
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5
+              class="modal-title h2 text-center text-info"
+              id="exampleModalLabel"
+            >
+              Modal title
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>
+              <span class="h5 d-block">Summary:</span>
+              <span class="modal-summary"></span>
+            </p>
+            <p>
+              <span class="h5 d-block">Categories:</span>
+              <span class="modal-categories"></span>
+            </p>
+            <p>
+              <span class="h5 d-block">Language:</span>
+              <span class="modal-language"></span>
+            </p>
+            <p>
+              <span class="h5 d-block">Released Year:</span>
+              <span class="modal-released-year"></span>
+            </p>
+            <p>
+              <span class="h5 d-block">Imdb Id:</span>
+              <span class="modal-imdb-id"></span>
+            </p>
+            <p>
+              <span class="h5 d-block">Imdb Rating:</span>
+              <span class="modal-imdb-rating"></span>
+            </p>
+          </div>
+          <div class="modal-footer justify-content-between">
+            <a
+              class="modal-trailer btn btn-outline-danger btn-sm"
+              href=""
+              target="_blank"
+            >
+              <span class="h5 d-block m-0">Watch Trailer</span>
+            </a>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
       </div>
-   </div>
+    </div>
 
+    <!-- Movies Item Template -->
+    <template id="movie_template">
+      <li
+        class="movies__item movie card col-md-5 mt-0 mb-3 mx-3 p-0"
+        data-imdb-id=""
+      >
+        <img
+          class="movie__img card-img-top img-fluid"
+          src="https://via.placeholder.com/400x250"
+          width="400"
+          height="250"
+        />
 
+        <div
+          class="movie__inner card-body d-flex flex-column p-3 bg-white h-100"
+        >
+          <h3
+            class="movie__heading card-title h5 justify-content-center text-center mb-2 font-weight-bold"
+          >
+            Strange Magic
+          </h3>
 
-   <!-- Movies Item Template -->
-   <template id="movie_template">
-
-      <li class="movies__item movie card col-md-5 mt-0 mb-3 mx-3  p-0" data-imdb-id="">
-
-         <img class="movie__img card-img-top img-fluid" src="https://via.placeholder.com/400x250" width="400"
-            height="250">
-
-         <div class="movie__inner card-body d-flex flex-column p-3  bg-white h-100">
-
-            <h3 class="movie__heading card-title h5 justify-content-center text-center mb-2 font-weight-bold">Strange
-               Magic</h3>
-
-            <div class="mt-auto">
-               <div class="d-flex  align-items-center mb-2">
-                  <img class="mr-2" src="img/beenhere-24px.svg" alt="Id" aria-hidden="true" width="25" height="25">
-                  <p class="m-0">Movie Id:
-                     <span class="movie__id text-info">1</span>
-                  </p>
-               </div>
-
-
-               <div class="d-flex  align-items-center mb-2">
-                  <img class="mr-2" src="img/theaters-24px.svg" alt="Theatres icon" aria-hidden="true" width="25"
-                     height="25">
-                  <p class="m-0">Released:
-                     <span class="movie__year text-info">2019</span>
-                  </p>
-               </div>
-
-               <div class="d-flex  align-items-center mb-2">
-                  <img class="mr-2" src="img/category-24px.svg" alt="Categories icon" aria-hidden="true" width="25"
-                     height="25">
-                  <p class="m-0">Categories:
-                     <span class="movie__categories text-info">
-                        Adventure, Animation, Comedy, Family, Fantasy
-                     </span>
-                  </p>
-               </div>
-
-               <div class="d-flex  align-items-center mb-2">
-                  <img class="mr-2" src="img/star_rate-24px.svg" alt="Rating" aria-hidden="true" width="25" height="25">
-                  <p class="m-0">Imdb Rating:
-                     <span class="movie__imdb-rating text-info">5.8</span>
-                  </p>
-               </div>
-
-
-               <div class="d-flex  align-items-center justify-content-around flex-column mb-2 text-primary">
-                  <button class="movie__btn-more btn btn-block btn-sm btn-info m-1" data-toggle="modal"
-                     data-target="#exampleModal">
-                     More
-                  </button>
-                  <a class="movie__youtube-link btn btn-block btn-sm btn-warning m-1" href=""
-                     target="_blank">Trailer:</a>
-                  <button class="movie__bookmark btn btn-block btn-sm btn-success m-1">Bookmark</button>
-               </div>
-
+          <div class="mt-auto">
+            <div class="d-flex align-items-center mb-2">
+              <img
+                class="mr-2"
+                src="img/beenhere-24px.svg"
+                alt="Id"
+                aria-hidden="true"
+                width="25"
+                height="25"
+              />
+              <p class="m-0">
+                Movie Id:
+                <span class="movie__id text-info">1</span>
+              </p>
             </div>
 
-         </div>
+            <div class="d-flex align-items-center mb-2">
+              <img
+                class="mr-2"
+                src="img/theaters-24px.svg"
+                alt="Theatres icon"
+                aria-hidden="true"
+                width="25"
+                height="25"
+              />
+              <p class="m-0">
+                Released:
+                <span class="movie__year text-info">2019</span>
+              </p>
+            </div>
 
+            <div class="d-flex align-items-center mb-2">
+              <img
+                class="mr-2"
+                src="img/category-24px.svg"
+                alt="Categories icon"
+                aria-hidden="true"
+                width="25"
+                height="25"
+              />
+              <p class="m-0">
+                Categories:
+                <span class="movie__categories text-info">
+                  Adventure, Animation, Comedy, Family, Fantasy
+                </span>
+              </p>
+            </div>
+
+            <div class="d-flex align-items-center mb-2">
+              <img
+                class="mr-2"
+                src="img/star_rate-24px.svg"
+                alt="Rating"
+                aria-hidden="true"
+                width="25"
+                height="25"
+              />
+              <p class="m-0">
+                Imdb Rating:
+                <span class="movie__imdb-rating text-info">5.8</span>
+              </p>
+            </div>
+
+            <div
+              class="d-flex align-items-center justify-content-around flex-column mb-2 text-primary"
+            >
+              <button
+                class="movie__btn-more btn btn-block btn-sm btn-info m-1"
+                data-toggle="modal"
+                data-target="#exampleModal"
+              >
+                More
+              </button>
+              <a
+                class="movie__youtube-link btn btn-block btn-sm btn-warning m-1"
+                href=""
+                target="_blank"
+                >Trailer:</a
+              >
+              <button
+                class="movie__bookmark btn btn-block btn-sm btn-success m-1"
+              >
+                Bookmark
+              </button>
+            </div>
+          </div>
+        </div>
       </li>
+    </template>
 
-   </template>
-
-
-   <!-- Bookmarks template -->
-   <template id="bookamrks__template">
-      <li class="bookmarks__item list-group-item d-flex
-      flex-column">
-         <h4 class="bookmarks__title h5">Avengers</h4>
-         <button class="bookmark__remove btn btn-danger btn-sm  align-self-end">Remove</button>
+    <!-- Bookmarks template -->
+    <template id="bookamrks__template">
+      <li class="bookmarks__item list-group-item d-flex flex-column">
+        <h4 class="bookmarks__title h5">Avengers</h4>
+        <button class="bookmark__remove btn btn-danger btn-sm align-self-end">
+          Remove
+        </button>
       </li>
-   </template>
+    </template>
 
-   <script src="js/jquery-3.5.1.min.js"></script>
-   <script src="js/bootstrap.bundle.min.js"></script>
-   <script src="js/utils.js"></script>
-   <script src="js/movies.js"></script>
-   <script src="js/scripts.js"></script>
-</body>
-
+    <script src="js/jquery-3.5.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/movies.js"></script>
+    <script src="js/scripts.js"></script>
+  </body>
 </html>
