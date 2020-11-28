@@ -223,7 +223,15 @@ var renderBookmarks = (movies) => {
 }
 
 // Create golabal bookmarks Array
-let bookmarksArr = []
+let bookmarksArr = JSON.parse(localStorage.getItem('bookmarks')) || []
+
+var updateBookmarksLocalStorage = (arr) => {
+   localStorage.setItem('bookmarks', JSON.stringify(bookmarksArr))
+}
+
+// Function to update local storage
+
+localStorage.setItem('bookmarks', JSON.stringify(bookmarksArr))
 
 // Get movie modal element
 var elMovieModal = $_('.movie-modal')
@@ -240,10 +248,13 @@ var doesMovieBookmarked = (foundMovie) => {
    // Push if movie does not exist
    if (!doesExist) {
       bookmarksArr.push(foundMovie)
-      localStorage.setItem('bookmarks', JSON.stringify(bookmarksArr))
-
+      updateBookmarksLocalStorage(bookmarksArr)
    }
 }
+
+// Render localStorage bookmark
+renderBookmarks(JSON.parse(localStorage.getItem('bookmarks')))
+
 
 // *********** Listen elMoviesResultList **************
 elMoviesResultList.addEventListener('click', (evt) => {
@@ -261,10 +272,7 @@ elMoviesResultList.addEventListener('click', (evt) => {
       // Assign values to li
       $_('.modal-title', elMovieModal).textContent = foundMovie.title
       $_('.modal-summary', elMovieModal).textContent = foundMovie.summary
-      $_(
-         '.modal-categories',
-         elMovieModal
-      ).textContent = foundMovie.categories.join(', ')
+      $_('.modal-categories', elMovieModal).textContent = foundMovie.categories.join(', ')
       $_('.modal-trailer', elMovieModal).href = foundMovie.trailer
       $_('.modal-language', elMovieModal).textContent = foundMovie.language
       $_('.modal-released-year', elMovieModal).textContent = foundMovie.year
@@ -300,6 +308,7 @@ elBookmarksList.addEventListener('click', (evt) => {
          return movie.imdbId === foundBookmark.imdbId
       })
       bookmarksArr.splice(bookmarIndex, 1)
+      updateBookmarksLocalStorage(bookmarksArr)
    }
 })
 
@@ -316,6 +325,6 @@ elBtnClearInfo.addEventListener('click', () => {
 })
 
 
-if (!localStorage.getItem('name')) {
-   localStorage.setItem('name', prompt('Enter name:'))
-}
+// if (!localStorage.getItem('name')) {
+//    localStorage.setItem('name', prompt('Enter name:'))
+// }
