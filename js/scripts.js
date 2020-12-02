@@ -1,3 +1,4 @@
+// Assign new global bindings to get in pagination
 var sortedMovies
 var page = 1
 var pageSize = 10
@@ -16,10 +17,10 @@ var elBookmarksList = $_('.bookmarks__list')
 var elPaginationList = $_('.pagination')
 var elPaginationTemplate = $_('#pagination-item-template').content
 
+
 /* =======================================================
 Normalize Movies Array
 ======================================================= */
-
 var normalizedMovies = movies.map((movie, i) => {
    return {
       id: i + 1,
@@ -34,6 +35,7 @@ var normalizedMovies = movies.map((movie, i) => {
       trailer: `https://www.youtube.com/watch?v=${movie.ytid}`,
    }
 })
+
 
 // Create element function
 var createNewMovie = (movie) => {
@@ -54,6 +56,7 @@ var createNewMovie = (movie) => {
    return elNewMovie
 }
 
+
 // Global render movies function
 var renderMovies = (movies) => {
    elMoviesResultList.innerHTML = ''
@@ -70,6 +73,7 @@ var renderMovies = (movies) => {
 // Render first 100 of movies
 renderMovies(normalizedMovies.slice(0, pageSize))
 
+
 // Assign all categories to an array
 var movieCategories = []
 
@@ -83,6 +87,7 @@ normalizedMovies.forEach((movie) => {
 
 // Sort the categories array
 movieCategories.sort()
+
 
 // Function to create option elements and append to select
 var createElOption = (arr, elAppend) => {
@@ -100,17 +105,14 @@ var createElOption = (arr, elAppend) => {
 // Add movieCategories to elSelectCategory
 createElOption(movieCategories, elSelectCategory)
 
+
 // Find movies Result validate by title, reting, category
 var findResults = (inputTitle, minRating, category) => {
    var result = normalizedMovies.filter((movie) => {
       if (category === 'all') {
-
          var condition = movie.title.match(inputTitle) && movie.imdbRating >= minRating
-
       } else {
-
          var condition = movie.title.match(inputTitle) && movie.imdbRating >= minRating && movie.categories.includes(category)
-
       }
 
       return condition
@@ -118,6 +120,7 @@ var findResults = (inputTitle, minRating, category) => {
 
    return result
 }
+
 
 // Sorting Obj Alphabetical
 var sortObjAlphabet = (array) => {
@@ -131,12 +134,14 @@ var sortObjAlphabet = (array) => {
    })
 }
 
+
 // Sorting Obj by Rating
 var sortObjRating = (array) =>
    array.sort((a, b) => b.imdbRating - a.imdbRating)
 
 // Sorting Obj by Year
 var sortObjYear = (array) => array.sort((a, b) => b.year - a.year)
+
 
 // Allocating sorting function according to features choice
 var sortMovies = (array, features) => {
@@ -157,15 +162,20 @@ var sortMovies = (array, features) => {
    }
 }
 
+
 // Pagination Function
 var paginate = (movies) => {
 
+   // Empty innerHTML of elPaginationList
    elPaginationList.innerHTML = ''
 
+   // Count how many pages will be the sesult Movies
    pagesCount = Math.ceil(movies.length / pageSize)
 
+   // Create fragment to append pagination btns
    var elPaginationBtnsFragment = document.createDocumentFragment()
 
+   // Loop to create pagination btns and assign values
    for (let i = 0; i < pagesCount; i++) {
 
       var elNewPaginationItem = elPaginationTemplate.cloneNode(true)
@@ -209,10 +219,7 @@ elFormMovies.addEventListener('submit', (evt) => {
 
    sortedMovies = sortMovies(foundMovies, selectFeaturesValue)
 
-
-
-   console.log(`${sortedMovies.length}ta kino, ${pagesCount}ta sahifa`)
-
+   // Paginate sortedMovie
    paginate(sortedMovies)
 
    // Show alert-danger when nothing is found
@@ -224,7 +231,7 @@ elFormMovies.addEventListener('submit', (evt) => {
       return
    }
 
-   // Render a final result
+   // Render a final result first 10 of them
    renderMovies(sortedMovies.slice(0, pageSize))
 })
 
@@ -331,6 +338,7 @@ elMoviesResultList.addEventListener('click', (evt) => {
    }
 })
 
+
 // Listen elBookmarksList ===================================
 elBookmarksList.addEventListener('click', (evt) => {
    if (evt.target.matches('.bookmark__remove')) {
@@ -353,20 +361,25 @@ elBookmarksList.addEventListener('click', (evt) => {
 })
 
 
+// Listen click of elPaginationList
 elPaginationList.addEventListener('click', function (evt) {
    if (evt.target.matches('.page-link')) {
       evt.preventDefault()
 
+      // Find parents of pagination item and remove active class
       evt.target.closest('.pagination').querySelectorAll('.page-item').forEach((li) => {
          li.classList.remove('active')
       })
 
+      // Add active class to pagination btn when clicked
       evt.target.parentNode.classList.add('active')
 
+      // Get startIndex from pagination btn and assign to new binding
       var startIndex = Number(evt.target.dataset.startIndex)
+      // Render starting from assigned start index until next 10 movies
       renderMovies(sortedMovies.slice(startIndex, startIndex + pageSize))
 
-
+      // Kindness(:
       window.scrollTo(0, 0)
    }
 })
