@@ -1,3 +1,8 @@
+var sortedMovies
+var page = 1
+var pageSize = 10
+var pagesCount
+
 // Get HTML elements
 var elFormMovies = $_('.js-movies__form')
 var elInputSearchMovie = $_('.js-movies_search-input', elFormMovies)
@@ -8,6 +13,8 @@ var elMoviesResultList = $_('.js-movies__list')
 var elBoxNotFoundMovies = $_('.js-movies__not-found')
 var elMovieTemplate = $_('#movie_template').content
 var elBookmarksList = $_('.bookmarks__list')
+var elPaginationList = $_('.pagination')
+var elPaginationTemplate = $_('#pagination-item-template').content
 
 /* =======================================================
 Normalize Movies Array
@@ -40,9 +47,7 @@ var createNewMovie = (movie) => {
    $_('.movie__heading', elNewMovie).textContent = movie.title
    $_('.movie__id', elNewMovie).textContent = movie.id
    $_('.movie__year', elNewMovie).textContent = movie.year
-   $_('.movie__categories', elNewMovie).textContent = movie.categories.join(
-      ', '
-   )
+   $_('.movie__categories', elNewMovie).textContent = movie.categories.join(', ')
    $_('.movie__imdb-rating', elNewMovie).textContent = movie.imdbRating
    $_('.movie__youtube-link', elNewMovie).href = movie.trailer
 
@@ -63,7 +68,7 @@ var renderMovies = (movies) => {
 }
 
 // Render first 100 of movies
-renderMovies(normalizedMovies.slice(160, 200))
+renderMovies(normalizedMovies.slice(0, pageSize))
 
 // Assign all categories to an array
 var movieCategories = []
@@ -99,13 +104,13 @@ createElOption(movieCategories, elSelectCategory)
 var findResults = (inputTitle, minRating, category) => {
    var result = normalizedMovies.filter((movie) => {
       if (category === 'all') {
-         var condition =
-            movie.title.match(inputTitle) && movie.imdbRating >= minRating
+
+         var condition = movie.title.match(inputTitle) && movie.imdbRating >= minRating
+
       } else {
-         var condition =
-            movie.title.match(inputTitle) &&
-            movie.imdbRating >= minRating &&
-            movie.categories.includes(category)
+
+         var condition = movie.title.match(inputTitle) && movie.imdbRating >= minRating && movie.categories.includes(category)
+
       }
 
       return condition
@@ -152,6 +157,29 @@ var sortMovies = (array, features) => {
    }
 }
 
+// Pagination Function
+var paginate = (movies) => {
+
+   elPaginationList.innerHTML = ''
+
+   pagesCount = Math.ceil(movies.length / pageSize)
+
+   var elPaginationBtnsFragment = document.createDocumentFragment()
+
+   for (let i = 0; i < pagesCount; i++) {
+
+      var elNewPaginationItem = elPaginationTemplate.cloneNode(true)
+      $_('.page-link', elNewPaginationItem).dataset.startIndex = i * pageSize
+      $_('.page-link', elNewPaginationItem).textContent = i + 1
+
+      elPaginationBtnsFragment.appendChild(elNewPaginationItem)
+   }
+
+   return elPaginationList.appendChild(elPaginationBtnsFragment)
+
+}
+
+
 /* ===================================================
 Listen elFormMovies 
 =================================================== */
@@ -178,7 +206,14 @@ elFormMovies.addEventListener('submit', (evt) => {
       inputRatingMovie,
       selectCategoryValue
    )
-   var sortedMovies = sortMovies(foundMovies, selectFeaturesValue)
+
+   sortedMovies = sortMovies(foundMovies, selectFeaturesValue)
+
+
+
+   console.log(`${sortedMovies.length}ta kino, ${pagesCount}ta sahifa`)
+
+   paginate(sortedMovies)
 
    // Show alert-danger when nothing is found
    elBoxNotFoundMovies.classList.add('d-none')
@@ -190,11 +225,12 @@ elFormMovies.addEventListener('submit', (evt) => {
    }
 
    // Render a final result
-   renderMovies(sortedMovies)
+   renderMovies(sortedMovies.slice(0, pageSize))
 })
 
 // Clone bookmark template
 var elBookmarkTemplate = $_('#bookamrks__template').content
+
 
 // Create bookmark function ============================
 var createNewBookmark = (movie) => {
@@ -209,6 +245,7 @@ var createNewBookmark = (movie) => {
    return elNewBookmark
 }
 
+
 // *********  Global render movies function *************
 var renderBookmarks = (movies) => {
    elBookmarksList.innerHTML = ''
@@ -222,19 +259,23 @@ var renderBookmarks = (movies) => {
    return elBookmarksList.appendChild(elFragementMovies)
 }
 
+
 // Create golabal bookmarks Array
 let bookmarksArr = JSON.parse(localStorage.getItem('bookmarks')) || []
 
-var updateBookmarksLocalStorage = (arr) => {
+var updateBookmarksLocalStorage = () => {
    localStorage.setItem('bookmarks', JSON.stringify(bookmarksArr))
 }
+
 
 // Function to update local storage
 
 localStorage.setItem('bookmarks', JSON.stringify(bookmarksArr))
 
+
 // Get movie modal element
 var elMovieModal = $_('.movie-modal')
+
 
 // Validate wethear movie is added
 var doesMovieBookmarked = (foundMovie) => {
@@ -255,10 +296,8 @@ var doesMovieBookmarked = (foundMovie) => {
 // Render localStorage bookmark
 renderBookmarks(JSON.parse(localStorage.getItem('bookmarks')))
 
-
 // *********** Listen elMoviesResultList **************
 elMoviesResultList.addEventListener('click', (evt) => {
-
    // Match more btn and assign values
    if (evt.target.matches('.movie__btn-more')) {
       // Get closest li
@@ -277,7 +316,8 @@ elMoviesResultList.addEventListener('click', (evt) => {
       $_('.modal-language', elMovieModal).textContent = foundMovie.language
       $_('.modal-released-year', elMovieModal).textContent = foundMovie.year
       $_('.modal-imdb-id', elMovieModal).textContent = foundMovie.imdbId
-      $_('.modal-imdb-rating', elMovieModal).textContent = foundMovie.imdbRating
+      $_('.modal-imdb-rating', elMovieModal).textContent =
+         foundMovie.imdbRating
    } else if (evt.target.matches('.movie__bookmark')) {
       var elBookmark = evt.target.closest('li')
 
@@ -313,6 +353,23 @@ elBookmarksList.addEventListener('click', (evt) => {
 })
 
 
+elPaginationList.addEventListener('click', function (evt) {
+   if (evt.target.matches('.page-link')) {
+      evt.preventDefault()
+
+      evt.target.closest('.pagination').querySelectorAll('.page-item').forEach((li) => {
+         li.classList.remove('active')
+      })
+
+      evt.target.parentNode.classList.add('active')
+
+      var startIndex = Number(evt.target.dataset.startIndex)
+      renderMovies(sortedMovies.slice(startIndex, startIndex + pageSize))
+
+
+      window.scrollTo(0, 0)
+   }
+})
 
 /* =================================================
 localStorage Features
@@ -322,9 +379,6 @@ var elBtnClearInfo = $_('.js-clear-info__btn')
 
 elBtnClearInfo.addEventListener('click', () => {
    localStorage.clear()
+   bookmarksArr = []
+   elBookmarksList.innerHTML = ''
 })
-
-
-// if (!localStorage.getItem('name')) {
-//    localStorage.setItem('name', prompt('Enter name:'))
-// }
